@@ -9,6 +9,30 @@ public class Interface {
 		reader = new Scanner(System.in);
 	}
 	
+	public int gameMode(){
+		int optionG;
+		do{
+		System.out.print("Choose game mode: \n\n"
+				+ "1. Classic Maze\n"
+				+ "2. Random Maze\n\n"
+				+ "> ");
+		reader = new Scanner(System.in);
+		optionG = reader.nextInt();
+		} while (optionG < 1 || optionG > 2);
+		return optionG;
+	}
+	
+	public int dragonMode(){
+		int optionD;
+		do {
+			System.out.print("\n\nChoose dragon mode: \n\n" + "1. Igle\n"
+					+ "2. Random Moviment\n" + "3. Sleeping dragon\n\n" + "> ");
+			reader = new Scanner(System.in);
+			optionD = reader.nextInt();
+		} while (optionD < 1 || optionD > 3);
+		return optionD;
+	}
+	
 	public char readChar(){
 		char read;
 		System.out.print("> ");
@@ -26,5 +50,10 @@ public class Interface {
 	}
 	public void printLoosingMessage(){
 		System.out.println("\t\t\t\t YOU LOSE !!!!!! \n \n \n \n \n \n \n \n \n");
+	}
+	public void clearSrc(){
+		for(int i = 0; i < 50; i++){
+			System.out.println();
+		}
 	}
 }

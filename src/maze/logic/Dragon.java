@@ -24,6 +24,7 @@ public class Dragon extends Piece {
 		super(x, y);
 		
 		this.dead = false;
+		this.sleeping = false;
 		this.desc = 'D';
 		this.mode = mode;
 		
@@ -39,21 +40,19 @@ public class Dragon extends Piece {
 	}
 	
 	public boolean canMove() {
-		{
-			System.out.println("sleep: "+sleepTime+"\n");
-	        if (mode == Behaviour.Idle)
-	            return false;
-	        if (sleeping)
-	            return false;
-	        return true;
-	    }
+		System.out.println("sleep: "+sleepTime+"\n");
+		if (mode == Behaviour.Idle || sleeping)
+			return false;
+		else
+			return true;
 	}
 	
-	public boolean CanSleep()
+	public boolean canSleep()
     {
         if (mode != Behaviour.Sleep)
             return false;
-        return true;
+        else
+        	return true;
     }
 
 	public void setDead() {

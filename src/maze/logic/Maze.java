@@ -4,37 +4,40 @@ import java.util.Random;
 import maze.cli.*;
 
 public class Maze {
-	protected boolean done;
-	protected Board board;
-	protected Dragon dragon;
-	protected Exit exit;
-	protected Hero hero;
-	protected Sword sword;
-	protected Interface io;
+	private boolean done;
+	private Builder builder;
+	private Board board;
+	private Dragon dragon;
+	private Exit exit;
+	private Hero hero;
+	private Sword sword;
+	private Interface io;
 
-	public Maze(Dragon.Behaviour dragonMode) {
+	public Maze() {
 		done = false;
-		board = new Board();
 		io = new Interface();
-		dragon = new Dragon(1, 3, dragonMode);
-		exit = new Exit(9, 5);
-		hero = new Hero(1, 1);
-		sword = new Sword(1, 8);
+		io.clearSrc();
+		builder = new Builder(io.gameMode(),io.dragonMode());
+		board = builder.createBoard();
+		hero = builder.createHero(board);
+		exit = builder.createExit(board);
+		sword = builder.createSword(board, hero);
+		dragon = builder.createDragon(board, hero);
+		
 		char cmd;
 		do {
+			io.clearSrc();
 			io.printString(this.toString());
 			cmd = io.readChar();
 			update(cmd);
 
 		} while (!done);
+		io.clearSrc();
 		if (!hero.getDead()) {
 			io.printWinningMessage();
 		} else {
 			io.printLoosingMessage();
 		}
-	}
-
-	public Maze() {
 	}
 
 	public String toString() {
@@ -47,14 +50,14 @@ public class Maze {
 					maze += exit + " ";
 				} else if (i == dragon.getY() && j == dragon.getX()
 						&& !dragon.getDead()) {
-					if (!dragon.equals(sword))
-						maze += dragon + " ";
-					else {
+					if (dragon.equals(sword) && !hero.getArmed()){
 						if (dragon.getSleeping())
 							maze += "F ";
 						else
 							maze += "f ";
 					}
+					else
+						maze += dragon + " ";
 				} else if (i == sword.getY() && j == sword.getX()
 						&& !hero.getArmed() && !dragon.equals(sword)) {
 					maze += sword + " ";
@@ -69,17 +72,12 @@ public class Maze {
 
 	public void update(char cmd) {
 		updateHero(cmd);
-		if (dragon.canMove()) {
-			updateDragon();
-		}
-		if (dragon.getSleeping())
-			dragon.update();
-		else
-			dragon.sleepingMachine();
+		updateDragon();
 		checkArmedStatus();
 		checkDragon();
 		checkIfDone();
 	}
+
 
 	private void checkDragon() {
 		if ((Math.abs(hero.getX() - dragon.getX()) <= 1 && Math.abs(hero.getY()
@@ -89,7 +87,8 @@ public class Maze {
 			if (hero.getArmed()) {
 				dragon.setDead();
 			} else {
-				hero.setDead();
+				if(!dragon.getSleeping())	
+					hero.setDead();
 			}
 		}
 	}
@@ -104,8 +103,19 @@ public class Maze {
 		if (!hero.getArmed() && hero.equals(sword))
 			hero.setArmed();
 	}
-
+	
 	private void updateDragon() {
+		if (dragon.canMove()) {
+			updateDragonPos();
+		}
+		if (dragon.canSleep())
+			if(dragon.getSleeping())
+				dragon.update();
+			
+			else
+				dragon.sleepingMachine();
+	}
+	private void updateDragonPos() {
 		int x = 0;
 		int y = 0;
 		Random r = new Random();

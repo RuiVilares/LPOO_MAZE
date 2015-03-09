@@ -7,9 +7,11 @@ import data_structures.*;
 
 public class Board {
 	private char[][] board;
+	private int size;
 
 	public Board() {
-		board = new char[][] {
+		size = 10;
+		board = new char[][]{
 				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
 				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
 				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
@@ -23,6 +25,7 @@ public class Board {
 	}
 	
 	public Board(int size) {
+		this.size = size;
 		board = new char[size][size];
 		for(int k = 0; k < board.length; k++){
 			for(int m = 0; m < board.length; m++){
@@ -135,6 +138,6 @@ public class Board {
 	}
 
 	public int getSize() {
-		return board.length;
+		return size;
 	}
 }
