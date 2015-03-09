@@ -25,6 +25,6 @@ public class Interface {
 		System.out.println("\t\t\t\t YOU WIN !!!!!! \n \n \n \n \n \n \n \n \n");
 	}
 	public void printLoosingMessage(){
-		System.out.println("\t\t\t\t YOU WIN !!!!!! \n \n \n \n \n \n \n \n \n");
+		System.out.println("\t\t\t\t YOU LOSE !!!!!! \n \n \n \n \n \n \n \n \n");
 	}
 }
