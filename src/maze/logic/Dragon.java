@@ -40,7 +40,6 @@ public class Dragon extends Piece {
 	}
 	
 	public boolean canMove() {
-		System.out.println("sleep: "+sleepTime+"\n");
 		if (mode == Behaviour.Idle || sleeping)
 			return false;
 		else
@@ -89,7 +88,6 @@ public class Dragon extends Piece {
 		int prob;
 		Random r = new Random();
 		prob = r.nextInt(60)+1;
-		System.out.println("prob: "+prob+"\n");
 		if (prob%10 == 0)
 			setSleeping(prob/10);
     }
