@@ -7,18 +7,35 @@ import data_structures.*;
 
 public class Board {
 	private char[][] board;
+	private int size;
+
+	public Board() {
+		size = 10;
+		board = new char[][]{
+				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
+				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X' },
+				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+				{ 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X' },
+				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }, };
+	}
 	
-	public Board(int size){
+	public Board(int size) {
+		this.size = size;
 		board = new char[size][size];
 		for(int k = 0; k < board.length; k++){
 			for(int m = 0; m < board.length; m++){
 				board[k][m] = 'X';
 			}
 		}
-		generateLabirinto();
+		generateBoard();
 	}
 
-private void generateLabirinto(){
+	private void generateBoard(){
 		int x,y;
 		Random r = new Random();
 		Stack<Pair> stack = new Stack<Pair>();
@@ -115,12 +132,12 @@ private void generateLabirinto(){
 		}
 		return false;
 	}
-
-	public char getCell(int x, int y){
+	
+	public char getCell(int x, int y) {
 		return board[y][x];
 	}
-	
-	public int getSize(){
-		return board.length;
+
+	public int getSize() {
+		return size;
 	}
 }
