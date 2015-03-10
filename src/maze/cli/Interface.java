@@ -33,6 +33,17 @@ public class Interface {
 		return optionD;
 	}
 	
+	public int dragonSpitFire(){
+		int option;
+		do {
+			System.out.print("\n\nCan the dragon spit fire: \n\n" + "1. Yes\n"
+					+ "2. No\n\n" + "> ");
+			reader = new Scanner(System.in);
+			option = reader.nextInt();
+		} while (option < 1 || option > 2);
+		return option;
+	}
+	
 	public char readChar(){
 		char read;
 		System.out.print("> ");
