@@ -17,13 +17,17 @@ public class Maze {
 		done = false;
 		io = new Interface();
 		io.clearSrc();
-		builder = new Builder(io.gameMode(),io.dragonMode());
+		builder = new Builder(io.gameMode());
+		if (builder.getRandom()) {
+			builder.setDragonMode(io.dragonMode());
+			builder.setDragonSpitFire(io.dragonSpitFire());
+		}
 		board = builder.createBoard();
 		hero = builder.createHero(board);
 		exit = builder.createExit(board);
 		sword = builder.createSword(board, hero);
 		dragon = builder.createDragon(board, hero);
-		
+
 		char cmd;
 		do {
 			io.clearSrc();
@@ -50,13 +54,12 @@ public class Maze {
 					maze += exit + " ";
 				} else if (i == dragon.getY() && j == dragon.getX()
 						&& !dragon.getDead()) {
-					if (dragon.equals(sword) && !hero.getArmed()){
+					if (dragon.equals(sword) && !hero.getArmed()) {
 						if (dragon.getSleeping())
 							maze += "F ";
 						else
 							maze += "f ";
-					}
-					else
+					} else
 						maze += dragon + " ";
 				} else if (i == sword.getY() && j == sword.getX()
 						&& !hero.getArmed() && !dragon.equals(sword)) {
@@ -78,16 +81,69 @@ public class Maze {
 		checkIfDone();
 	}
 
+	private boolean checkDragonColision(int dif) {
+		int i;
+		if (hero.getX() - dragon.getX() <= dif
+				&& Math.abs(hero.getY() - dragon.getY()) == 0 && hero.getX() - dragon.getX() >= 0) {
+			i = dragon.getX();
+			do {
+				if (board.getCell(i, hero.getY()) == 'X'){
+					return false;
+				}
+				i++;
+			} while(i<hero.getX());
+			return true;
+		}
+		if (dragon.getX() - hero.getX() <= dif
+				&& Math.abs(hero.getY() - dragon.getY()) == 0 && dragon.getX() - hero.getX() >= 0) {
+			i = hero.getX();
+			do {
+				if (board.getCell(i, hero.getY()) == 'X')
+				{
+					return false;
+				}
+				i++;
+			} while(i<dragon.getX());
+			return true;
+		}
+		if (Math.abs(hero.getX() - dragon.getX()) == 0
+				&& hero.getY() - dragon.getY() <= dif && hero.getY() - dragon.getY() >= 0) {
+			i = dragon.getY();
+			do {
+				if (board.getCell(hero.getX(), i) == 'X')
+				{
+					return false;
+				}
+				i++;
+			} while(i<hero.getY());
+			return true;
+		}
+		if (Math.abs(hero.getX() - dragon.getX()) == 0
+				&& dragon.getY() - hero.getY() <= dif && dragon.getY() - hero.getY() >= 0) {
+			i = hero.getY();
+			do {
+				if (board.getCell(hero.getX(), i) == 'X')
+				{
+					return false;
+				}
+				i++;
+			} while(i<dragon.getY());
+			return true;
+		}
+		return false;
+	}
 
 	private void checkDragon() {
-		if ((Math.abs(hero.getX() - dragon.getX()) <= 1 && Math.abs(hero.getY()
-				- dragon.getY()) == 0)
-				|| (Math.abs(hero.getX() - dragon.getX()) == 0 && Math.abs(hero
-						.getY() - dragon.getY()) <= 1)) {
-			if (hero.getArmed()) {
+		int dif;
+		if (dragon.getSpitFire())
+			dif = 3;
+		else
+			dif = 1;
+		if (checkDragonColision(dif)) {
+			if (hero.getArmed() && !dragon.getSpitFire()) {
 				dragon.setDead();
 			} else {
-				if(!dragon.getSleeping())	
+				if (!dragon.getSleeping())
 					hero.setDead();
 			}
 		}
@@ -103,18 +159,19 @@ public class Maze {
 		if (!hero.getArmed() && hero.equals(sword))
 			hero.setArmed();
 	}
-	
+
 	private void updateDragon() {
 		if (dragon.canMove()) {
 			updateDragonPos();
 		}
 		if (dragon.canSleep())
-			if(dragon.getSleeping())
+			if (dragon.getSleeping())
 				dragon.update();
-			
+
 			else
 				dragon.sleepingMachine();
 	}
+
 	private void updateDragonPos() {
 		int x = 0;
 		int y = 0;
