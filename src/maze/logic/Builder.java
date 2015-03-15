@@ -17,7 +17,7 @@ public class Builder {
 			this.random = true;
 	}
 
-	void setDragonMode(int optionD) {
+	public void setDragonMode(int optionD) {
 		switch (optionD) {
 		case 1:
 			this.dragonMode = Dragon.Behaviour.Idle;
@@ -33,14 +33,18 @@ public class Builder {
 		};
 	}
 
-	void setDragonSpitFire(int optionS) {
+	public void setDragonSpitFire(int optionS) {
 		if (optionS == 1)
 			this.spitFire = true;
 		else
 			this.spitFire = false;
 	}
 	
-	boolean getRandom(){
+	public boolean getDragonSpitFire() {
+			return this.spitFire;
+	}
+	
+	public boolean getRandom(){
 		return this.random;
 	};
 
@@ -90,6 +94,19 @@ public class Builder {
 			sword = new Sword(x, y);
 		} while (board.getCell(x, y) == 'X' || sword.equals(hero));
 		return sword;
+	}
+	
+	public Shield createShield(Board board, Hero hero) {
+		Random r = new Random();
+		Shield shield;
+		int x = 0;
+		int y = 0;
+		do {
+			x = r.nextInt(board.getSize());
+			y = r.nextInt(board.getSize());
+			shield = new Shield(x, y);
+		} while (board.getCell(x, y) == 'X' || shield.equals(hero));
+		return shield;
 	}
 
 	public Exit createExit(Board board) {

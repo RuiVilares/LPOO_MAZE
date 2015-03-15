@@ -1,6 +1,7 @@
 package maze.logic;
 
 import java.util.Random;
+
 import maze.cli.*;
 
 public class Maze {
@@ -12,7 +13,7 @@ public class Maze {
 	private Hero hero;
 	private Sword sword;
 	private Interface io;
-
+	
 	public Maze() {
 		done = false;
 		io = new Interface();
@@ -64,7 +65,7 @@ public class Maze {
 				} else if (i == sword.getY() && j == sword.getX()
 						&& !hero.getArmed() && !dragon.equals(sword)) {
 					maze += sword + " ";
-				} else {
+					} else {
 					maze += board.getCell(j, i) + " ";
 				}
 			}
@@ -82,55 +83,36 @@ public class Maze {
 	}
 
 	private boolean checkDragonColision(int dif) {
-		int i;
-		if (hero.getX() - dragon.getX() <= dif
-				&& Math.abs(hero.getY() - dragon.getY()) == 0 && hero.getX() - dragon.getX() >= 0) {
-			i = dragon.getX();
-			do {
-				if (board.getCell(i, hero.getY()) == 'X'){
-					return false;
-				}
-				i++;
-			} while(i<hero.getX());
-			return true;
-		}
-		if (dragon.getX() - hero.getX() <= dif
-				&& Math.abs(hero.getY() - dragon.getY()) == 0 && dragon.getX() - hero.getX() >= 0) {
-			i = hero.getX();
-			do {
-				if (board.getCell(i, hero.getY()) == 'X')
-				{
-					return false;
-				}
-				i++;
-			} while(i<dragon.getX());
-			return true;
+		int min = 0, max = 0, fix = 0;
+		if (Math.abs(hero.getX() - dragon.getX()) <= dif
+				&& Math.abs(hero.getY() - dragon.getY()) == 0) {
+			if (hero.getX() - dragon.getX() >= 0) {
+				min = dragon.getX();
+				max = hero.getX();
+			} else {
+				min = hero.getX();
+				max = dragon.getX();
+			}
+			fix = hero.getY();
 		}
 		if (Math.abs(hero.getX() - dragon.getX()) == 0
-				&& hero.getY() - dragon.getY() <= dif && hero.getY() - dragon.getY() >= 0) {
-			i = dragon.getY();
-			do {
-				if (board.getCell(hero.getX(), i) == 'X')
-				{
-					return false;
-				}
-				i++;
-			} while(i<hero.getY());
-			return true;
+				&& Math.abs(hero.getY() - dragon.getY()) <= dif) {
+			if (hero.getY() - dragon.getY() >= 0) {
+				min = dragon.getY();
+				max = hero.getY();
+			} else {
+				min = hero.getY();
+				max = dragon.getY();
+			}
+			fix = hero.getX();
 		}
-		if (Math.abs(hero.getX() - dragon.getX()) == 0
-				&& dragon.getY() - hero.getY() <= dif && dragon.getY() - hero.getY() >= 0) {
-			i = hero.getY();
-			do {
-				if (board.getCell(hero.getX(), i) == 'X')
-				{
-					return false;
-				}
-				i++;
-			} while(i<dragon.getY());
-			return true;
-		}
-		return false;
+		do {
+			if (board.getCell(min, fix) == 'X') {
+				return false;
+			}
+			min++;
+		} while (min < max);
+		return true;
 	}
 
 	private void checkDragon() {
