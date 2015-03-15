@@ -4,10 +4,12 @@ package maze.logic;
 public class Hero extends Piece {
 	private boolean dead;
 	private boolean armed;
-	
+	private boolean protection;
+
 	public Hero(int x, int y){
 		super(x,y);
 		this.dead = false;
+		this.protection = false;
 		this.armed = false;
 		this.desc = 'H';
 	}
@@ -18,7 +20,10 @@ public class Hero extends Piece {
 	
 	public void setArmed(){
 		this.armed=true;
-		this.desc = 'A';
+		if(!protection)
+			this.desc = 'A';
+		else
+			desc = 'U';
 	}
 
 	public boolean getDead() {
@@ -27,6 +32,18 @@ public class Hero extends Piece {
 
 	public void setDead() {
 		this.dead = true;
+	}
+	public boolean isProtection() {
+		return protection;
+	}
+
+	public void setProtection() {
+		this.protection = true;
+		if(armed){
+			desc = 'U';
+		}
+		else
+			desc = 'Q';
 	}
 	public String toString(){
 		return ""+desc;
