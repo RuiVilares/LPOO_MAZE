@@ -10,7 +10,7 @@ public class Builder {
 
 	public Builder(int random) {
 		this.spitFire = false;
-		this.dragonMode = Dragon.Behaviour.Random;
+		this.dragonMode = Dragon.Behaviour.Idle;
 		if (random == 1)
 			this.random = false;
 		else

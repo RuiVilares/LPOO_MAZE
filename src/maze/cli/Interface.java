@@ -44,6 +44,16 @@ public class Interface {
 		return option;
 	}
 	
+	public int dragonSize(){
+		int optionD;
+		do {
+			System.out.print("\n\nChoose numbre of dragons: \n\n" + "> ");
+			reader = new Scanner(System.in);
+			optionD = reader.nextInt();
+		} while (optionD < 1 || optionD > 5);
+		return optionD;
+	}
+	
 	public char readChar(){
 		char read;
 		System.out.print("> ");
