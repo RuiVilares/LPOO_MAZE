@@ -150,4 +150,25 @@ public class Builder {
 		} while (board.getCell(x, y) == 'X' || dragon.equals(hero));
 		return dragon;
 	}
+	
+	public Dart createDart(Board board) {
+		if (!random)
+			return new Dart(1,2);
+		else {
+			return generateDart(board);
+		}
+	}
+
+	private Dart generateDart(Board board) {
+		Random r = new Random();
+		int x = 0;
+		int y = 0;
+		Dart dart;
+		do {
+			x = r.nextInt(board.getSize());
+			y = r.nextInt(board.getSize());
+			dart = new Dart(x, y);
+		} while (board.getCell(x, y) == 'X');
+		return dart;
+	}
 }
