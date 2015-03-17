@@ -27,10 +27,18 @@ public class Maze {
 		hero = builder.createHero(board);
 		exit = builder.createExit(board);
 		sword = builder.createSword(board, hero);
-		shield = builder.createShield(board, hero);
+		if (builder.getRandom())
+			shield = builder.createShield(board, hero);
+		else 
+			shield = null;
+		
+		if(!builder.getDragonSpitFire()){
+			hero.setProtection();
+		}
 		do {
 			dragons.add(builder.createDragon(board, hero));
-			darts.add(builder.createDart(board));
+			if (builder.getRandom())
+				darts.add(builder.createDart(board));
 			nDragons--;
 		} while (nDragons > 0);
 	}
@@ -79,7 +87,7 @@ public class Maze {
 				} else if (i == sword.getY() && j == sword.getX()
 						&& !hero.getArmed() && !swordEqualsAnyDragon()) {
 					maze += sword + " ";
-				} else if (i == shield.getY() && j == shield.getX()
+				} else if (shield != null && i == shield.getY() && j == shield.getX()
 						&& !hero.isProtection() && !shieldEqualsAnyDragon()) {
 					maze += shield + " ";
 				} else {
@@ -405,5 +413,9 @@ public class Maze {
 
 	public Hero getHero() {
 		return hero;
+	}
+	
+	public ArrayList<Dragon> getDragons(){
+		return dragons;
 	}
 }

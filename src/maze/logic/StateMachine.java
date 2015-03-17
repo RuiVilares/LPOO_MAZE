@@ -14,6 +14,7 @@ public class StateMachine {
 			maze = new Maze(gameMode, 1, 2, 1);
 		else
 			maze = new Maze(gameMode, io.dragonMode(), io.dragonSpitFire(), io.dragonSize());
+		
 		char cmd;
 		do {
 			io.clearSrc();
@@ -21,8 +22,7 @@ public class StateMachine {
 			cmd = io.readChar();
 			maze.update(cmd);
 
-		} while (!maze.isDone());
-		
+		} while (!maze.isDone());	
 		
 		io.clearSrc();
 		if (!maze.getHero().getDead()) {
