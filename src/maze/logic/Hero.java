@@ -5,6 +5,7 @@ public class Hero extends Piece {
 	private boolean dead;
 	private boolean armed;
 	private boolean protection;
+	private int nDarts;
 
 	public Hero(int x, int y){
 		super(x,y);
@@ -12,6 +13,7 @@ public class Hero extends Piece {
 		this.protection = false;
 		this.armed = false;
 		this.desc = 'H';
+		this.nDarts=0;
 	}
 	
 	public boolean getArmed(){
@@ -47,5 +49,17 @@ public class Hero extends Piece {
 	}
 	public String toString(){
 		return ""+desc;
+	}
+	
+	public void incDarts(){
+		this.nDarts++;
+	}
+	
+	public void decDarts(){
+		this.nDarts--;
+	}
+	
+	public int getDarts(){
+		return this.nDarts;
 	}
 }
