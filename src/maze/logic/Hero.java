@@ -5,42 +5,48 @@ public class Hero extends Piece {
 	private boolean dead;
 	private boolean armed;
 	private boolean protection;
+	private boolean protectionNeed;
 	private int nDarts;
 
 	public Hero(int x, int y){
 		super(x,y);
 		this.dead = false;
 		this.protection = false;
+		this.protectionNeed = true;
 		this.armed = false;
 		this.desc = 'H';
 		this.nDarts=0;
 	}
 	
-	public boolean getArmed(){
+	public boolean isArmed(){
 		return armed;
 	}
 	
 	public void setArmed(){
 		this.armed=true;
-		if(!protection)
+		if(!protection || !protectionNeed)
 			this.desc = 'A';
 		else
 			desc = 'U';
 	}
 
-	public boolean getDead() {
+	public boolean isDead() {
 		return dead;
 	}
 
 	public void setDead() {
-		this.dead = true;
+		dead = true;
 	}
 	public boolean isProtection() {
 		return protection;
 	}
+	public void noProtectionNeeded(){
+		protection = true;
+		protectionNeed = false;
+	}
 
 	public void setProtection() {
-		this.protection = true;
+		protection = true;
 		if(armed){
 			desc = 'U';
 		}

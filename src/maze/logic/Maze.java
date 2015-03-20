@@ -13,45 +13,62 @@ public class Maze {
 	private Hero hero;
 	private Sword sword;
 	private Shield shield;
-
-	public Maze(int gameMode, int dragonMode, int dragonSpitFire, int nDragons) {
+	
+	public Maze(){
 		done = false;
+		
 		dragons = new ArrayList<Dragon>();
 		darts = new ArrayList<Dart>();
-		builder = new Builder(gameMode);
-		if (builder.getRandom()) {
-			builder.setDragonMode(dragonMode);
-			builder.setDragonSpitFire(dragonSpitFire);
-		}
+		
+		builder = new Builder(1);
+		builder.setDragonMode(1);
+		builder.setDragonSpitFire(2);
+		
+		
 		board = builder.createBoard();
 		hero = builder.createHero(board);
 		exit = builder.createExit(board);
 		sword = builder.createSword(board, hero);
-		if (builder.getRandom())
-			shield = builder.createShield(board, hero);
-		else 
-			shield = null;
+		dragons.add(builder.createDragon(board, hero));
+		shield = null;
+		hero.noProtectionNeeded();
+	}
+
+	public Maze(int dragonMode, int dragonSpitFire, int nDragons) {
+		done = false;
+		
+		dragons = new ArrayList<Dragon>();
+		darts = new ArrayList<Dart>();
+		builder = new Builder(2);
+		
+		builder.setDragonMode(dragonMode);
+		builder.setDragonSpitFire(dragonSpitFire);
+		
+		board = builder.createBoard();
+		hero = builder.createHero(board);
+		exit = builder.createExit(board);
+		sword = builder.createSword(board, hero);
+		shield = builder.createShield(board, hero);
 		
 		if(!builder.getDragonSpitFire()){
 			hero.setProtection();
 		}
 		do {
 			dragons.add(builder.createDragon(board, hero));
-			if (builder.getRandom())
-				darts.add(builder.createDart(board));
+			darts.add(builder.createDart(board));
 			nDragons--;
 		} while (nDragons > 0);
 	}
 
 	public String toString() {
 		String maze = "";
-		maze += "Armed: " + hero.getArmed() + "  Shield: "
+		/*maze += "Armed: " + hero.getArmed() + "  Shield: "
 				+ hero.isProtection() + "  Number of Darts: " + hero.getDarts()
 				+ "\n" + "Dragons: " + numDragons() + "/" + dragons.size()
 				+ "  SpitFire: " + dragons.get(0).getSpitFire()
 				+ "  CanSleep: " + dragons.get(0).canSleep() + "  CanMove: "
 				+ dragons.get(0).canMove() + "  Sleeping: "
-				+ dragons.get(0).getSleeping() + "\n";
+				+ dragons.get(0).getSleeping() + "\n";*/
 		int dragonIndex;
 		int dartIndex;
 		for (int i = 0; i < board.getSize(); i++) {
@@ -59,39 +76,39 @@ public class Maze {
 				dragonIndex = checkForAliveDragonCell(j, i);
 				dartIndex = checkForDarts(j, i);
 				if (i == hero.getY() && j == hero.getX()) {
-					maze += hero + " ";
+					maze += hero + "";
 				} else if (i == exit.getY() && j == exit.getX()) {
-					maze += exit + " ";
+					maze += exit + "";
 				} else if (dragonIndex != -1) {
 					if (dragons.get(dragonIndex).equals(sword)
-							&& !hero.getArmed()) {
-						if (!dragons.get(dragonIndex).getSleeping())
-							maze += "F ";
+							&& !hero.isArmed()) {
+						if (!dragons.get(dragonIndex).isSleeping())
+							maze += "F";
 						else
-							maze += "f ";
+							maze += "f";
 					} else if (dragons.get(dragonIndex).equals(shield)
 							&& !hero.isProtection()) {
-						if (!dragons.get(dragonIndex).getSleeping())
-							maze += "M ";
+						if (!dragons.get(dragonIndex).isSleeping())
+							maze += "M";
 						else
-							maze += "m ";
+							maze += "m";
 					} else
-						maze += dragons.get(dragonIndex) + " ";
+						maze += dragons.get(dragonIndex) + "";
 					//
 				} else if (dartIndex != -1) {
 					if (!darts.get(dartIndex).getTaked())
-						maze += darts.get(dartIndex) + " ";
+						maze += darts.get(dartIndex) + "";
 					else
-						maze += "  ";
+						maze += " ";
 					//
 				} else if (i == sword.getY() && j == sword.getX()
-						&& !hero.getArmed() && !swordEqualsAnyDragon()) {
-					maze += sword + " ";
+						&& !hero.isArmed() && !swordEqualsAnyDragon()) {
+					maze += sword + "";
 				} else if (shield != null && i == shield.getY() && j == shield.getX()
 						&& !hero.isProtection() && !shieldEqualsAnyDragon()) {
-					maze += shield + " ";
+					maze += shield + "";
 				} else {
-					maze += board.getCell(j, i) + " ";
+					maze += board.getCell(j, i) + "";
 				}
 			}
 			maze += "\n";
@@ -113,8 +130,7 @@ public class Maze {
 
 	private int checkForAliveDragonCell(int x, int y) {
 		for (int i = 0; i < dragons.size(); i++) {
-			if (dragons.get(i).getX() == x && dragons.get(i).getY() == y
-					&& !dragons.get(i).getDead())
+			if (dragons.get(i).getX() == x && dragons.get(i).getY() == y)
 				return i;
 		}
 		return -1;
@@ -144,34 +160,17 @@ public class Maze {
 		return false;
 	}
 
-	private int numDragons() {
-		int aux = 0;
+	private boolean killDragonsInCell(int x, int y) {
 		for (int i = 0; i < dragons.size(); i++) {
-			if (!dragons.get(i).getDead())
-				aux++;
-		}
-		return aux;
-	}
-
-	private boolean dragonsInCell(int x, int y) {
-		for (int i = 0; i < dragons.size(); i++) {
-			if (dragons.get(i).getX() == x && dragons.get(i).getY() == y
-					&& !dragons.get(i).getDead()) {
-				dragons.get(i).setDead();
+			if (dragons.get(i).getX() == x && dragons.get(i).getY() == y) {
+				dragons.remove(i);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean allDragonsDead() {
-		for (int i = 0; i < dragons.size(); i++) {
-			if (!dragons.get(i).getDead()) {
-				return false;
-			}
-		}
-		return true;
-	}
+
 
 	private boolean checkDragonColision(int dif, int index) {
 		int i;
@@ -229,21 +228,18 @@ public class Maze {
 	private void checkDragons() {
 		for (int i = 0; i < dragons.size(); i++) {
 			int dif;
-			if (dragons.get(i).getSpitFire())
+			if (dragons.get(i).spitsFire())
 				dif = 3;
 			else
 				dif = 1;
-			if (!dragons.get(i).getSleeping() && !hero.isProtection()
-					&& !dragons.get(i).getDead()) {
+			if (!dragons.get(i).isSleeping() && !hero.isProtection()) {
 				if (checkDragonColision(dif, i))
 					hero.setDead();
 			} else if (checkDragonColision(1, i)) {
-				if (!dragons.get(i).getDead()) {
-					if (hero.getArmed())
-						dragons.get(i).setDead();
+					if (hero.isArmed())
+						dragons.remove(i);
 					else
 						hero.setDead();
-				}
 			}
 
 			// if (checkDragonColision(dif, i)) {
@@ -258,13 +254,13 @@ public class Maze {
 	}
 
 	private void checkIfDone() {
-		if (hero.getDead() || (hero.equals(exit) && allDragonsDead())) {
+		if (hero.isDead() || (hero.equals(exit) && dragons.size() == 0)) {
 			done = true;
 		}
 	}
 
 	private void checkArmedStatus() {
-		if (!hero.getArmed() && hero.equals(sword))
+		if (!hero.isArmed() && hero.equals(sword))
 			hero.setArmed();
 	}
 
@@ -288,7 +284,7 @@ public class Maze {
 				updateDragonPos(i);
 			}
 			if (dragons.get(i).canSleep())
-				if (dragons.get(i).getSleeping())
+				if (dragons.get(i).isSleeping())
 					dragons.get(i).update();
 
 				else
@@ -333,28 +329,28 @@ public class Maze {
 		case 'w':
 			hero.decY();
 			if ((board.getCell(hero.getX(), hero.getY()) == 'X' && !hero
-					.equals(exit)) || (hero.equals(exit) && !allDragonsDead())) {
+					.equals(exit)) || (hero.equals(exit) && dragons.size() != 0)) {
 				hero.incY();
 			}
 			break;
 		case 'd':
 			hero.incX();
 			if ((board.getCell(hero.getX(), hero.getY()) == 'X' && !hero
-					.equals(exit)) || (hero.equals(exit) && !allDragonsDead())) {
+					.equals(exit)) || (hero.equals(exit) && dragons.size() != 0)) {
 				hero.decX();
 			}
 			break;
 		case 's':
 			hero.incY();
 			if ((board.getCell(hero.getX(), hero.getY()) == 'X' && !hero
-					.equals(exit)) || (hero.equals(exit) && !allDragonsDead())) {
+					.equals(exit)) || (hero.equals(exit) && dragons.size() != 0)) {
 				hero.decY();
 			}
 			break;
 		case 'a':
 			hero.decX();
 			if ((board.getCell(hero.getX(), hero.getY()) == 'X' && !hero
-					.equals(exit)) || (hero.equals(exit) && !allDragonsDead())) {
+					.equals(exit)) || (hero.equals(exit) && dragons.size() != 0)) {
 				hero.incX();
 			}
 			break;
@@ -370,7 +366,7 @@ public class Maze {
 				hero.decDarts();
 				do {
 					System.out.println("Y: " + y);
-					if (dragonsInCell(x, y))
+					if (killDragonsInCell(x, y))
 						break;
 					y--;
 				} while (board.getCell(x, y) != 'X');
@@ -379,7 +375,7 @@ public class Maze {
 				hero.decDarts();
 				do {
 					System.out.println("X: " + x);
-					if (dragonsInCell(x, y))
+					if (killDragonsInCell(x, y))
 						break;
 					x++;
 				} while (board.getCell(x, y) != 'X');
@@ -388,7 +384,7 @@ public class Maze {
 				hero.decDarts();
 				do {
 					System.out.println("X: " + x);
-					if (dragonsInCell(x, y))
+					if (killDragonsInCell(x, y))
 						break;
 					x--;
 				} while (board.getCell(x, y) != 'X');
@@ -397,7 +393,7 @@ public class Maze {
 				hero.decDarts();
 				do {
 					System.out.println("Y: " + y);
-					if (dragonsInCell(x, y))
+					if (killDragonsInCell(x, y))
 						break;
 					y++;
 				} while (board.getCell(x, y) != 'X');

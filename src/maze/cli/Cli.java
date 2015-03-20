@@ -2,11 +2,40 @@ package maze.cli;
 
 import java.util.Scanner;
 
-public class Interface {
+import maze.gui.Gui;
+import maze.logic.Maze;
+
+public class Cli {
 	private Scanner reader;
 	
-	public Interface(){
+	public Cli(){
+		Maze maze;
 		reader = new Scanner(System.in);
+		clearSrc();
+		Gui gui = new Gui();
+		
+		gui.getDefinitions();
+		int gameMode = gameMode();
+		if(gameMode == 1)
+			 maze = new Maze();
+		else
+			maze = new Maze(dragonMode(), dragonSpitFire(), dragonSize());
+		
+		char cmd;
+		do {
+			clearSrc();
+			printString(maze + "");
+			cmd = readChar();
+			maze.update(cmd);
+
+		} while (!maze.isDone());	
+		
+		clearSrc();
+		if (!maze.getHero().isDead()) {
+			printWinningMessage();
+		} else {
+			printLoosingMessage();
+		}
 	}
 	
 	public int gameMode(){

@@ -13,7 +13,6 @@ public class Dragon extends Piece {
         Sleep
     }
 	private boolean spitFire;
-	private boolean dead;
 	private boolean sleeping;
 	private int sleepTime;
 	private final Behaviour mode;
@@ -22,8 +21,7 @@ public class Dragon extends Piece {
 
 	public Dragon(int x, int y, Behaviour mode, boolean spitFire) {
 		super(x, y);
-		
-		this.dead = false;
+	
 		this.sleeping = false;
 		this.desc = 'D';
 		this.mode = mode;
@@ -32,15 +30,12 @@ public class Dragon extends Piece {
 	}
 	
 
-	public boolean getDead() {
-		return dead;
-	}
 	
-	public boolean getSleeping() {
+	public boolean isSleeping() {
 		return sleeping;
 	}
 	
-	public boolean getSpitFire(){
+	public boolean spitsFire(){
 		return spitFire;
 	}
 	
@@ -59,9 +54,6 @@ public class Dragon extends Piece {
         	return true;
     }
 
-	public void setDead() {
-		this.dead = true;
-	}
 	
 	public void setDesc(char desc) {
 		this.desc = desc;
