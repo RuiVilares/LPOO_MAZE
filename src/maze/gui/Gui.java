@@ -75,11 +75,10 @@ public class Gui extends JFrame implements KeyListener, ComponentListener{
     }
 
 	public void componentResized(ComponentEvent e) {
-		
+		((MazeFrame) panel).resize(getWidth(), getHeight());
 	}
 
 	public void componentMoved(ComponentEvent e) {
-		((MazeFrame) panel).resize();
 	}
 
 	public void componentShown(ComponentEvent e) {

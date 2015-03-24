@@ -51,7 +51,7 @@ public class Maze {
 		shield = builder.createShield(board, hero);
 		
 		if(!builder.getDragonSpitFire()){
-			hero.setProtection();
+			hero.noProtectionNeeded();
 		}
 		do {
 			dragons.add(builder.createDragon(board, hero));

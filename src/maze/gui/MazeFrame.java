@@ -92,6 +92,25 @@ public class MazeFrame extends JPanel{
 		revalidate();
 		repaint();
 	}
+	public void resize(int width, int height){
+		width /=11;
+		height /=11;
+		Image imgGrass = grass.getImage();
+		grass = new ImageIcon(imgGrass.getScaledInstance(width, height,  Image.SCALE_SMOOTH));
+		Image imgHero = hero.getImage();
+		hero = new ImageIcon(imgHero.getScaledInstance(width, height,  Image.SCALE_SMOOTH));
+		Image imgDoor = door.getImage();
+		door = new ImageIcon(imgDoor.getScaledInstance(width, height,  Image.SCALE_SMOOTH));
+		Image imgWall = wall.getImage();
+		wall = new ImageIcon(imgWall.getScaledInstance(width, height,  Image.SCALE_SMOOTH));
+		Image imgDragon = dragon.getImage();
+		dragon = new ImageIcon(imgDragon.getScaledInstance(width, height,  Image.SCALE_SMOOTH));
+		Image imgSword = sword.getImage();
+		sword = new ImageIcon(imgSword.getScaledInstance(width, height,  Image.SCALE_SMOOTH));
+		Image imgArmedHero = armedHero.getImage();
+		armedHero = new ImageIcon(imgArmedHero.getScaledInstance(width, height,  Image.SCALE_SMOOTH));
+		drawMaze();
+	}
 	
 
 }
