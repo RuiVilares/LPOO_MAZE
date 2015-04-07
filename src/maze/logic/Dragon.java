@@ -2,6 +2,7 @@ package maze.logic;
 
 import java.util.Random;
 
+@SuppressWarnings("serial")
 public class Dragon extends Piece {
 
 	public enum Behaviour

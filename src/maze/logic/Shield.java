@@ -1,5 +1,6 @@
 package maze.logic;
 
+@SuppressWarnings("serial")
 public class Shield extends Piece {
 
 	public Shield(int x, int y) {

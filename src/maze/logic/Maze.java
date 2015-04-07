@@ -1,11 +1,13 @@
 package maze.logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Maze {
+@SuppressWarnings("serial")
+public class Maze implements Serializable{
 	private boolean done;
-	private Builder builder;
+	private transient Builder builder;
 	private Board board;
 	private ArrayList<Dragon> dragons;
 	private ArrayList<Dart> darts;
@@ -62,13 +64,6 @@ public class Maze {
 
 	public String toString() {
 		String maze = "";
-		/*maze += "Armed: " + hero.getArmed() + "  Shield: "
-				+ hero.isProtection() + "  Number of Darts: " + hero.getDarts()
-				+ "\n" + "Dragons: " + numDragons() + "/" + dragons.size()
-				+ "  SpitFire: " + dragons.get(0).getSpitFire()
-				+ "  CanSleep: " + dragons.get(0).canSleep() + "  CanMove: "
-				+ dragons.get(0).canMove() + "  Sleeping: "
-				+ dragons.get(0).getSleeping() + "\n";*/
 		int dragonIndex;
 		int dartIndex;
 		for (int i = 0; i < board.getSize(); i++) {
@@ -116,10 +111,20 @@ public class Maze {
 		return maze;
 	}
 
+	public String stateToString() {
+		String def = "Armed: " + hero.isArmed() + "  Shield: "
+				+ hero.isProtection() + "  Number of Darts: " + hero.getDarts()
+				+ "\n" + "Dragons: " + dragons.size() + "/" + dragons.size()
+				+ "  SpitFire: " + dragons.get(0).spitsFire()
+				+ "  CanSleep: " + dragons.get(0).canSleep() + "  CanMove: "
+				+ dragons.get(0).canMove() + "  Sleeping: "
+				+ dragons.get(0).isSleeping() + "\n";
+		return def;
+	}
+
 	public void update(char cmd) {
 		updateHero(cmd);
-		if (builder.getRandom())
-			throwDarts(cmd);
+		throwDarts(cmd);
 		updateDragon();
 		checkDarts();
 		checkArmedStatus();
@@ -241,15 +246,6 @@ public class Maze {
 					else
 						hero.setDead();
 			}
-
-			// if (checkDragonColision(dif, i)) {
-			// if (hero.getArmed() && !dragons.get(i).getSpitFire()) {
-			// dragons.get(i).setDead();
-			// } else {
-			// if (!dragons.get(i).getSleeping() && !hero.isProtection())
-			//
-			// }
-			// }
 		}
 	}
 

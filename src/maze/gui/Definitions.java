@@ -1,18 +1,18 @@
 package maze.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 import maze.logic.Maze;
 
+@SuppressWarnings("serial")
 public class Definitions extends JPanel{
 	
-	private JFrame frame;
-	private static final long serialVersionUID = 1L;
+	private Gui frame;
 	private JButton next;
 	private String currentMode;
 	private JLabel mode;
@@ -25,7 +25,7 @@ public class Definitions extends JPanel{
 	private JComboBox<String> fireComboBox;
 	
 	
-	public Definitions(JFrame frame){
+	public Definitions(Gui frame){
 		this.frame = frame;
 		
 		setLayout(new GridLayout(5,2));
@@ -69,11 +69,13 @@ public class Definitions extends JPanel{
 		    }
 
 		});
+		next.setPreferredSize(new Dimension(100,50));
 		add(mode);
 		add(modeComboBox);
 		add(next);
 	}
-	
+
+
 	private void next() {
 		Maze maze;
 		if(((String)modeComboBox.getSelectedItem()).equals("Random Mode")){
@@ -104,7 +106,7 @@ public class Definitions extends JPanel{
 		else
 			maze = new Maze();
 		
-		((Gui)frame).maze(maze);
+		frame.maze(maze);
 	}
 
 	private void updateToClassic() {

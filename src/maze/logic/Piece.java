@@ -1,6 +1,9 @@
 package maze.logic;
 
-public class Piece {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Piece implements Serializable{
 	private int x;
 	private int y;
 	char desc;

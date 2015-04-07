@@ -1,91 +1,61 @@
 package maze.gui;
 
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import maze.logic.Maze;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.*;
 
-public class Gui extends JFrame implements KeyListener, ComponentListener{
+import maze.logic.Maze;
 
-	private static final long serialVersionUID = 3010908532613150542L;
+@SuppressWarnings("serial")
+public class Gui extends JFrame{
+
 	private JPanel panel;
 	
 	public Gui(){
-		this.panel = null;
-		this.setTitle("Labirinto");
+		panel = null;
+		setLocationRelativeTo(null);
+		setTitle("Labirinto");
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setResizable(true);
 	    setVisible(true);
+	    mainMenu();
 	}
 	
 	public void getDefinitions(){
-		if(getKeyListeners().length != 0){
-			this.removeKeyListener(this);
-		}
-		if(getComponentListeners().length != 0){
-			this.removeComponentListener(this);
-		}
 		if(panel != null){
 			remove(panel);
 		}
-		setResizable(true);
 		panel = new Definitions(this);
-		add(panel);
+		getContentPane().add(panel);
+		pack();
+	}
+	public void mainMenu(){
+		if(panel != null){
+			remove(panel);
+		}
+		panel = new MainMenu(this);
+		getContentPane().add(panel);
 		pack();
 	}
 	
 	public void maze(Maze maze){
-        addKeyListener(this);
-        addComponentListener(this);
-        setFocusable(true);
-        setFocusTraversalKeysEnabled(false);
+		setPreferredSize(new Dimension(500, 500));
+        setLayout(new BorderLayout());
+		setFocusTraversalKeysEnabled(false);
 		remove(panel);
-		panel = new MazeFrame(maze,this);
-		((MazeFrame) panel).drawMaze();
-		add(panel);
+		panel = new GamePanel(this,maze);
+		getContentPane().add(panel, BorderLayout.CENTER);
 		pack();
+		panel.requestFocus();
 	}
 
-    public void keyPressed(KeyEvent e) {
-    	switch(e.getKeyCode()){
-    	case KeyEvent.VK_UP:
-    		((MazeFrame) panel).updateMaze('w');
-    		break;
-    	case KeyEvent.VK_RIGHT:
-    		((MazeFrame) panel).updateMaze('d');
-    		break;
-    	case KeyEvent.VK_DOWN:
-    		((MazeFrame) panel).updateMaze('s');
-    		break;
-    	case KeyEvent.VK_LEFT:
-    		((MazeFrame) panel).updateMaze('a');
-    		break;
-    	}
-    	
-    }
-
-    public void keyReleased(KeyEvent e) {
-    	
-    }
-    public void keyTyped(KeyEvent e) {
-    	
-    }
-
-	public void componentResized(ComponentEvent e) {
-		((MazeFrame) panel).resize(getWidth(), getHeight());
-	}
-
-	public void componentMoved(ComponentEvent e) {
-	}
-
-	public void componentShown(ComponentEvent e) {
-		
-	}
-
-	public void componentHidden(ComponentEvent e) {
-		
+	public void win() {
+		if(panel != null){
+			remove(panel);
+		}
+		panel = new WinPane();
+		getContentPane().add(panel);
+		pack();
 	}
 }

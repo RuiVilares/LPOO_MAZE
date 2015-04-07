@@ -1,6 +1,7 @@
 package maze.logic;
 
 
+@SuppressWarnings("serial")
 public class Exit extends Piece {
 	
 	public Exit(int x, int y){

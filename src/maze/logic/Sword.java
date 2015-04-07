@@ -1,6 +1,7 @@
 package maze.logic;
 
 
+@SuppressWarnings("serial")
 public class Sword extends Piece {
 	
 	

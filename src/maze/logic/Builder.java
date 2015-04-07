@@ -3,7 +3,7 @@ package maze.logic;
 import java.util.Random;
 
 public class Builder {
-	private static final int size = 11;
+	private static int size = 11;
 	private boolean random;
 	private Dragon.Behaviour dragonMode;
 	private boolean spitFire;
@@ -11,8 +11,10 @@ public class Builder {
 	public Builder(int random) {
 		this.spitFire = false;
 		this.dragonMode = Dragon.Behaviour.Idle;
-		if (random == 1)
+		if (random == 1){
+			size = 10;
 			this.random = false;
+			}
 		else
 			this.random = true;
 	}
@@ -124,10 +126,31 @@ public class Builder {
 		do {
 			x = r.nextInt(board.getSize());
 			y = r.nextInt(board.getSize());
-		} while (!(((x == 0 || x == board.getSize() - 1) && y != 0 && y != board
-				.getSize() - 1) || ((y == 0 || y == board.getSize() - 1)
-				&& x != 0 && x != board.getSize() - 1)));
+		} while (!isAtBorder(x, y) || !accesible(board,x,y));
 		return new Exit(x, y);
+	}
+
+	private boolean accesible(Board board, int x, int y) {
+		if(x == 0 && board.getCell(x+1,y) == 'X'){
+			return false;
+		}
+		else if(x == size - 1 && board.getCell(x-1,y) == 'X'){
+			return false;
+		}
+		if(y == 0 && board.getCell(x,y+1) == 'X'){
+			return false;
+		}
+		else if(y == size - 1 && board.getCell(x,y-1) == 'X'){
+			return false;
+		}
+		else
+			return true;
+	}
+
+	private boolean isAtBorder(int x, int y) {
+		return (((x == 0 || x == size - 1) && y != 0 && y != size - 1) 
+				|| ((y == 0 || y == size -1)
+				&& x != 0 && x != size - 1));
 	}
 
 	public Dragon createDragon(Board board, Hero hero) {

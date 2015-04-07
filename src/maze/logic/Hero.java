@@ -1,6 +1,7 @@
 package maze.logic;
 
 
+@SuppressWarnings("serial")
 public class Hero extends Piece {
 	private boolean dead;
 	private boolean armed;

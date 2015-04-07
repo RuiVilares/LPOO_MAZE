@@ -2,7 +2,6 @@ package maze.cli;
 
 import java.util.Scanner;
 
-import maze.gui.Gui;
 import maze.logic.Maze;
 
 public class Cli {
@@ -12,9 +11,7 @@ public class Cli {
 		Maze maze;
 		reader = new Scanner(System.in);
 		clearSrc();
-		Gui gui = new Gui();
 		
-		gui.getDefinitions();
 		int gameMode = gameMode();
 		if(gameMode == 1)
 			 maze = new Maze();
@@ -24,6 +21,7 @@ public class Cli {
 		char cmd;
 		do {
 			clearSrc();
+			printString(maze.stateToString());
 			printString(maze + "");
 			cmd = readChar();
 			maze.update(cmd);

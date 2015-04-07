@@ -1,11 +1,13 @@
 package maze.logic;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Stack;
 
 import data_structures.*;
 
-public class Board {
+@SuppressWarnings("serial")
+public class Board implements Serializable{
 	private char[][] board;
 	private int size;
 
@@ -21,7 +23,7 @@ public class Board {
 				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
 				{ 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
 				{ 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }, };
+				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }};
 	}
 	
 	public Board(int size) {
