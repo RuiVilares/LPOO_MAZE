@@ -50,12 +50,25 @@ public class Gui extends JFrame{
 		panel.requestFocus();
 	}
 
-	public void win() {
+	public void end(boolean winner) {
 		if(panel != null){
 			remove(panel);
 		}
-		panel = new WinPane();
+		setFocusTraversalKeysEnabled(false);
+		panel = new EndPane(winner,this);
 		getContentPane().add(panel);
 		pack();
+		panel.requestFocus();
+	}
+	public void interectiveBuilder() {
+		setPreferredSize(new Dimension(500, 500));
+		if(panel != null){
+			remove(panel);
+		}
+		setFocusTraversalKeysEnabled(false);
+		panel = new MazeCostomBuilder(1,1,11);
+		getContentPane().add(panel);
+		pack();
+		panel.requestFocus();
 	}
 }

@@ -1,6 +1,7 @@
 package maze.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
@@ -19,15 +20,21 @@ import maze.logic.Maze;
 @SuppressWarnings("serial")
 public class MazePanel extends JPanel{
 	
-	private BufferedImage wall;
-	private BufferedImage door;
-	private BufferedImage grass;
-	private BufferedImage hero;
-	private BufferedImage dragon;
-	private BufferedImage sword;
-	private BufferedImage armedHero;
+	private static BufferedImage wall;
+	private static BufferedImage door;
+	private static BufferedImage grass;
+	private static BufferedImage hero;
+	private static BufferedImage dragon;
+	private static BufferedImage sword;
+	private static BufferedImage armedHero;
+	private static BufferedImage sleepingDragon;
+	private static BufferedImage darts;
+	private static BufferedImage shield;
+	private static BufferedImage heroShield;
+	private static BufferedImage heroFullyArmed;
 	private Maze maze;
 	private GameListener listener;
+	
 	
 	public MazePanel(Maze maze){
 		this.maze = maze;
@@ -36,13 +43,19 @@ public class MazePanel extends JPanel{
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		try{
-			wall = ImageIO.read(new File("res/muro.png"));
-			door = ImageIO.read(new File("res/door.png"));
-			grass = ImageIO.read(new File("res/relva.png"));
-			hero = ImageIO.read(new File("res/hero.png"));
-			dragon  = ImageIO.read(new File("res/dragon.png"));
-			sword = ImageIO.read(new File("res/sword.png"));
-			armedHero = ImageIO.read(new File("res/armedHero.png"));
+			wall = ImageIO.read(new File("res/Box.jpg"));
+			door = ImageIO.read(new File("res/Door.jpg"));
+			grass = ImageIO.read(new File("res/Grass.jpg"));
+			hero = ImageIO.read(new File("res/Hero.jpg"));
+			dragon  = ImageIO.read(new File("res/Dragon.jpg"));
+			sword = ImageIO.read(new File("res/Sword.jpg"));
+			armedHero = ImageIO.read(new File("res/HeroSword.jpg"));
+			sleepingDragon = ImageIO.read(new File("res/DragonSleep.jpg"));
+			darts = ImageIO.read(new File("res/Darts.jpg"));
+			shield = ImageIO.read(new File("res/Shield.jpg"));
+			heroShield = ImageIO.read(new File("res/HeroShield.jpg"));
+			heroFullyArmed = ImageIO.read(new File("res/HeroShieldSword.jpg"));
+			
 		}
 		catch(IOException e){
 			JOptionPane.showMessageDialog(this, e.getMessage());
@@ -51,7 +64,10 @@ public class MazePanel extends JPanel{
 	public void updateMaze(char cmd){
 		maze.update(cmd);
 		if(maze.isDone()){
-			listener.gameDone(new GameEvent("done",0));;
+			if(!maze.getHero().isDead())
+				listener.gameDone(new GameEvent("win",0));
+			else
+				listener.gameDone(new GameEvent("lose",0));
 		}
 		repaint();
 	}
@@ -91,6 +107,21 @@ public class MazePanel extends JPanel{
 			case 'A':
 				g.drawImage(armedHero, x1, y1, x2, y2, 0, 0, armedHero.getWidth(), armedHero.getHeight(), null);
 				break;
+			case 'd':
+				g.drawImage(sleepingDragon, x1, y1, x2, y2, 0, 0, sleepingDragon.getWidth(), sleepingDragon.getHeight(), null);
+				break;
+			case 'O':
+				g.drawImage(shield, x1, y1, x2, y2, 0, 0, shield.getWidth(), shield.getHeight(), null);
+				break;
+			case '/':
+				g.drawImage(darts, x1, y1, x2, y2, 0, 0, darts.getWidth(), darts.getHeight(), null);
+				break;
+			case 'U':
+				g.drawImage(heroFullyArmed, x1, y1, x2, y2, 0, 0, heroFullyArmed.getWidth(), heroFullyArmed.getHeight(), null);
+				break;
+			case 'Q':
+				g.drawImage(heroShield, x1, y1, x2, y2, 0, 0, heroShield.getWidth(), heroShield.getHeight(), null);
+				break;
 			case '\n':
 				x1 = 0;
 				x2 = width/11;
@@ -98,7 +129,7 @@ public class MazePanel extends JPanel{
 				y2 += height/11;
 				break;
 			default:
-				g.drawImage(grass, x1, y1, x2, y2, 0, 0, grass.getWidth(), grass.getHeight(), null);
+				g.drawImage(dragon, x1, y1, x2, y2, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
 				break;
 			}
 			if(mazeString.charAt(i) != '\n'){
@@ -124,5 +155,51 @@ public class MazePanel extends JPanel{
 		catch(IOException e){
 		}
 	}
-
+	
+	public JPanel getImagePane() {
+		class imagePane extends JPanel{
+			int height;
+			int width;
+			int x1;
+			int x2;
+			int y1;
+			int y2;
+			
+			public imagePane(){
+				height = 500;
+				width = 50;
+				x1 = 0;
+				x2 = width/11;
+				y1 = 0;
+				y2 = height/11;
+				setBackground(Color.BLACK);
+				this.setSize(new Dimension(height,width));
+			}
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(wall, x1, y1, x2, y2, 0, 0, wall.getWidth(), wall.getHeight(), null);
+				incPos();
+				g.drawImage(door, x1, y1, x2, y2, 0, 0, door.getWidth(), door.getHeight(), null);
+				incPos();
+				g.drawImage(grass, x1, y1, x2, y2, 0, 0, grass.getWidth(), grass.getHeight(), null);
+				incPos();
+				g.drawImage(dragon, x1, y1, x2, y2, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+				incPos();
+				g.drawImage(hero, x1, y1, x2, y2, 0, 0, hero.getWidth(), hero.getHeight(), null);
+				incPos();
+				g.drawImage(armedHero, x1, y1, x2, y2, 0, 0, armedHero.getWidth(), armedHero.getHeight(), null);
+				incPos();
+				g.drawImage(sword, x1, y1, x2, y2, 0, 0, sword.getWidth(), sword.getHeight(), null);
+				incPos();
+				
+			}
+			private void incPos() {
+				y1 += height/11;
+				y2 += height/11;
+			}
+			
+		};
+		return new imagePane();
+	}
 }

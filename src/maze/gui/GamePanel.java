@@ -28,7 +28,10 @@ public class GamePanel extends JPanel implements KeyListener{
 
 			@Override
 			public void gameDone(GameEvent e) {
-				frame.win();
+				if(e.getSource().equals("win"))
+					frame.end(true);
+				else
+					frame.end(false);
 				
 			}
 			

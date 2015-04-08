@@ -35,6 +35,63 @@ public class Maze implements Serializable{
 		shield = null;
 		hero.noProtectionNeeded();
 	}
+	
+	public Maze(int dragonMode, int dragonSpitFire, char [][] array){
+		done = false;
+		shield = null;
+		exit = new Exit(-1,-1);
+		hero = new Hero (-1,-1);
+		sword = new Sword(-1,-1);
+		char[][] maze = array;
+		boolean spitsFire = true;
+		Dragon.Behaviour behavior = Dragon.Behaviour.Idle;
+		
+		if(dragonSpitFire == 2){
+			spitsFire = false;
+		}
+		
+		if(dragonMode == 2){
+			behavior = Dragon.Behaviour.Random;
+		}
+		else if(dragonMode == 3){
+			behavior = Dragon.Behaviour.Sleep;
+		}
+		
+		dragons = new ArrayList<Dragon>();
+		darts = new ArrayList<Dart>();
+		for(int i = 0; i < array.length; i++){
+			for(int j = 0; j < array.length; j++){
+				switch(maze[i][j]){
+				case 'H':
+					hero = new Hero(j,i);
+					maze[i][j] = ' ';
+					break;
+				case 'E':
+					sword = new Sword(j,i);
+					maze[i][j] = ' ';
+					break;
+				case 'S':
+					exit = new Exit(j,i);
+					maze[i][j] = ' ';
+					break;
+				case 'O':
+					shield = new Shield(j,i);
+					maze[i][j] = ' ';
+					break;
+				case 'D':
+					dragons.add(new Dragon(i,j,behavior,spitsFire));
+					maze[i][j] = ' ';
+					break;
+				case '/':
+					darts.add(new Dart(i,j));
+					maze[i][j] = ' ';
+					break;
+				default:
+				}
+			}
+		}
+		board = new Board(maze);
+	}
 
 	public Maze(int dragonMode, int dragonSpitFire, int nDragons) {
 		done = false;

@@ -26,6 +26,11 @@ public class Board implements Serializable{
 				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }};
 	}
 	
+	public Board(char [][] array){
+		size = array.length;
+		board = array;
+	}
+	
 	public Board(int size) {
 		this.size = size;
 		board = new char[size][size];
