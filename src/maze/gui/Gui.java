@@ -61,7 +61,6 @@ public class Gui extends JFrame{
 		panel.requestFocus();
 	}
 	public void interectiveBuilder() {
-		setPreferredSize(new Dimension(500, 500));
 		if(panel != null){
 			remove(panel);
 		}

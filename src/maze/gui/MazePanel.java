@@ -1,7 +1,6 @@
 package maze.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
@@ -9,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -155,51 +155,15 @@ public class MazePanel extends JPanel{
 		catch(IOException e){
 		}
 	}
-	
-	public JPanel getImagePane() {
-		class imagePane extends JPanel{
-			int height;
-			int width;
-			int x1;
-			int x2;
-			int y1;
-			int y2;
-			
-			public imagePane(){
-				height = 500;
-				width = 50;
-				x1 = 0;
-				x2 = width/11;
-				y1 = 0;
-				y2 = height/11;
-				setBackground(Color.BLACK);
-				this.setSize(new Dimension(height,width));
-			}
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				g.drawImage(wall, x1, y1, x2, y2, 0, 0, wall.getWidth(), wall.getHeight(), null);
-				incPos();
-				g.drawImage(door, x1, y1, x2, y2, 0, 0, door.getWidth(), door.getHeight(), null);
-				incPos();
-				g.drawImage(grass, x1, y1, x2, y2, 0, 0, grass.getWidth(), grass.getHeight(), null);
-				incPos();
-				g.drawImage(dragon, x1, y1, x2, y2, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
-				incPos();
-				g.drawImage(hero, x1, y1, x2, y2, 0, 0, hero.getWidth(), hero.getHeight(), null);
-				incPos();
-				g.drawImage(armedHero, x1, y1, x2, y2, 0, 0, armedHero.getWidth(), armedHero.getHeight(), null);
-				incPos();
-				g.drawImage(sword, x1, y1, x2, y2, 0, 0, sword.getWidth(), sword.getHeight(), null);
-				incPos();
-				
-			}
-			private void incPos() {
-				y1 += height/11;
-				y2 += height/11;
-			}
-			
-		};
-		return new imagePane();
+	public ArrayList<BufferedImage> getImages() {
+		ArrayList<BufferedImage> imagens = new ArrayList<BufferedImage>();
+		imagens.add(wall);
+		imagens.add(door);
+		imagens.add(grass);
+		imagens.add(dragon);
+		imagens.add(hero);
+		imagens.add(shield);
+		imagens.add(sword);
+		return imagens;
 	}
 }
