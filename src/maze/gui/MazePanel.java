@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -154,16 +153,5 @@ public class MazePanel extends JPanel{
 		}
 		catch(IOException e){
 		}
-	}
-	public ArrayList<BufferedImage> getImages() {
-		ArrayList<BufferedImage> imagens = new ArrayList<BufferedImage>();
-		imagens.add(wall);
-		imagens.add(door);
-		imagens.add(grass);
-		imagens.add(dragon);
-		imagens.add(hero);
-		imagens.add(shield);
-		imagens.add(sword);
-		return imagens;
 	}
 }
