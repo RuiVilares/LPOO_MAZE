@@ -4,17 +4,47 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * 
+ * Class that defines the main maze logic.
+ * 
+ * @author Diogo Trindade
+ * @author Rui Vilares
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class Maze implements Serializable{
+	/** Represents maze termination */
 	private boolean done;
+	
+	/** Builder used to create a game with our settings */
 	private transient Builder builder;
+	
+	/** Board created by the builder */
 	private Board board;
+	
+	/** List of dragons in the board */
 	private ArrayList<Dragon> dragons;
+	
+	/** List of darts in the board */
 	private ArrayList<Dart> darts;
+	
+	/** Represents a exit piece */
 	private Exit exit;
+	
+	/** Represents a exit piece */
 	private Hero hero;
+	
+	/** Represents a sword piece */
 	private Sword sword;
+	
+	/** Represents a shield piece */
 	private Shield shield;
+	
+	/**
+	 * Constructs and initializes a null maze.
+	 */
 	
 	public Maze(){
 		done = false;
@@ -35,6 +65,17 @@ public class Maze implements Serializable{
 		shield = null;
 		hero.noProtectionNeeded();
 	}
+	
+	/**
+	 * Constructs and initializes maze with a specific board.
+	 * 
+	 * @param dragonMode
+	 * 			Dragon mode (idle, move, sleep)
+	 * @param dragonSpitFire
+	 * 			Spit Fire mode active or not
+	 * @param array
+	 * 			specific maze
+	 */
 	
 	public Maze(int dragonMode, int dragonSpitFire, char [][] array){
 		done = false;
@@ -93,6 +134,17 @@ public class Maze implements Serializable{
 		board = new Board(maze);
 	}
 
+	/**
+	 * Constructs and initializes maze with several dragons.
+	 * 
+	 * @param dragonMode
+	 * 			Dragon mode (idle, move, sleep)
+	 * @param dragonSpitFire
+	 * 			Spit Fire mode active or not
+	 * @param nDragons
+	 * 			number of dragons that we pretend
+	 */
+	
 	public Maze(int dragonMode, int dragonSpitFire, int nDragons) {
 		done = false;
 		
@@ -119,6 +171,13 @@ public class Maze implements Serializable{
 		} while (nDragons > 0);
 	}
 
+	/**
+	 * Draws complete maze.
+	 * 
+	 * @return String with every maze.
+	 * 
+	 */	
+	
 	public String toString() {
 		String maze = "";
 		int dragonIndex;
@@ -168,6 +227,13 @@ public class Maze implements Serializable{
 		return maze;
 	}
 
+	/**
+	 * Draws game state to String.
+	 * 
+	 * @return String with actual game state
+	 * 
+	 */	
+	
 	public String stateToString() {
 		String def = "Armed: " + hero.isArmed() + "  Shield: "
 				+ hero.isProtection() + "  Number of Darts: " + hero.getDarts()
@@ -179,6 +245,14 @@ public class Maze implements Serializable{
 		return def;
 	}
 
+	/**
+	 * Update game.
+	 * 
+	 * @param cmd
+	 * 			command received thought the user  
+	 * 
+	 */		
+	
 	public void update(char cmd) {
 		updateHero(cmd);
 		throwDarts(cmd);
@@ -190,6 +264,18 @@ public class Maze implements Serializable{
 		checkIfDone();
 	}
 
+	/**
+	 * Check for a live dragon in a determinate cell
+	 * 
+	 * @param x
+	 * 			X position
+	 * @param y
+	 * 			Y position
+	 * 
+	 * @return index of dragon in the cell or -1 in case of it doesn't exist
+	 * 
+	 */	
+	
 	private int checkForAliveDragonCell(int x, int y) {
 		for (int i = 0; i < dragons.size(); i++) {
 			if (dragons.get(i).getX() == x && dragons.get(i).getY() == y)
@@ -198,6 +284,18 @@ public class Maze implements Serializable{
 		return -1;
 	}
 
+	/**
+	 * Check for a dart in a determinate cell
+	 * 
+	 * @param x
+	 * 			X position
+	 * @param y
+	 * 			Y position
+	 * 
+	 * @return index of dart in the cell or -1 in case of it doesn't exist
+	 * 
+	 */	
+	
 	private int checkForDarts(int x, int y) {
 		for (int i = 0; i < darts.size(); i++) {
 			if (darts.get(i).getX() == x && darts.get(i).getY() == y)
@@ -206,6 +304,13 @@ public class Maze implements Serializable{
 		return -1;
 	}
 
+	/**
+	 * Check dragons and sword in the same position
+	 * 
+	 * @return true in case of overlapping, false otherwise
+	 * 
+	 */	
+	
 	private boolean swordEqualsAnyDragon() {
 		for (int i = 0; i < dragons.size(); i++) {
 			if (sword.equals(dragons.get(i)))
@@ -214,6 +319,13 @@ public class Maze implements Serializable{
 		return false;
 	}
 
+	/**
+	 * Check dragons and shield in the same position
+	 * 
+	 * @return true in case of overlapping, false otherwise
+	 * 
+	 */	
+	
 	private boolean shieldEqualsAnyDragon() {
 		for (int i = 0; i < dragons.size(); i++) {
 			if (shield.equals(dragons.get(i)))
@@ -222,6 +334,18 @@ public class Maze implements Serializable{
 		return false;
 	}
 
+	/**
+	 * Function to kill dragons in determinate cell
+	 * 
+	 * @param x
+	 * 			X position
+	 * @param y
+	 * 			Y position
+	 * 
+	 * @return true if any dragon was killed, false otherwise
+	 * 
+	 */	
+	
 	private boolean killDragonsInCell(int x, int y) {
 		for (int i = 0; i < dragons.size(); i++) {
 			if (dragons.get(i).getX() == x && dragons.get(i).getY() == y) {
@@ -232,7 +356,17 @@ public class Maze implements Serializable{
 		return false;
 	}
 
-
+	/**
+	 * Auxiliary function to check hero and dragon collision
+	 * 
+	 * @param diff
+	 * 			difference with hero and dragon collision
+	 * @param index
+	 * 			dragon index in dragons list
+	 * 
+	 * @return true if the dragon kill the hero, false otherwise
+	 * 
+	 */	
 
 	private boolean checkDragonColision(int dif, int index) {
 		int i;
@@ -287,6 +421,10 @@ public class Maze implements Serializable{
 		return false;
 	}
 
+	/**
+	 * Function to update hero and dragon state
+	 */	
+	
 	private void checkDragons() {
 		for (int i = 0; i < dragons.size(); i++) {
 			int dif;
@@ -306,22 +444,38 @@ public class Maze implements Serializable{
 		}
 	}
 
+	/**
+	 * Function to check the end of the game
+	 */	
+	
 	private void checkIfDone() {
 		if (hero.isDead() || (hero.equals(exit) && dragons.size() == 0)) {
 			done = true;
 		}
 	}
-
+	
+	/**
+	 * Function to analyze hero and sword position. Turns hero armed
+	 */	
+	
 	private void checkArmedStatus() {
 		if (!hero.isArmed() && hero.equals(sword))
 			hero.setArmed();
 	}
 
+	/**
+	 * Function to analyze hero and shield position. Turns hero protected
+	 */
+	
 	private void checkProtectionStatus() {
 		if (!hero.isProtection() && hero.equals(shield))
 			hero.setProtection();
 	}
 
+	/**
+	 * Function to analyze hero and darts position. Hero catch the dart
+	 */
+	
 	private void checkDarts() {
 		for (int i = 0; i < darts.size(); i++) {
 			if (darts.get(i).equals(hero) && !darts.get(i).getTaked()) {
@@ -331,6 +485,10 @@ public class Maze implements Serializable{
 		}
 	}
 
+	/**
+	 * Function to update every dragons.
+	 */
+	
 	private void updateDragon() {
 		for (int i = 0; i < dragons.size(); i++) {
 			if (dragons.get(i).canMove()) {
@@ -344,7 +502,15 @@ public class Maze implements Serializable{
 					dragons.get(i).sleepingMachine();
 		}
 	}
-
+	
+	/**
+	 * Function to update a dragon position.
+	 * 
+	 * @param i
+	 * 			index of dragons list  
+	 * 
+	 */
+	
 	private void updateDragonPos(int i) {
 		int x = 0;
 		int y = 0;
@@ -377,6 +543,14 @@ public class Maze implements Serializable{
 		} while (true);
 	}
 
+	/**
+	 * Function to update hero position and status.
+	 * 
+	 * @param cmd
+	 * 			char with a direction received throw the user
+	 * 
+	 */
+	
 	private void updateHero(char cmd) {
 		switch (cmd) {
 		case 'w':
@@ -411,6 +585,14 @@ public class Maze implements Serializable{
 		}
 	}
 
+	/**
+	 * Function to launch the darts.
+	 * 
+	 * @param cmd
+	 * 			char with a direction received throw the user
+	 * 
+	 */
+	
 	private void throwDarts(char cmd) {
 		int x = hero.getX(), y = hero.getY();
 		if (hero.getDarts() != 0) {
@@ -456,13 +638,34 @@ public class Maze implements Serializable{
 		}
 	}
 
+	/**
+	 * Function to check done state.
+	 * 
+	 * @return done flag 
+	 * 
+	 */
+	
 	public boolean isDone() {
 		return done;
 	}
 
+	/**
+	 * Get hero.
+	 * 
+	 * @return hero
+	 * 
+	 */
+	
 	public Hero getHero() {
 		return hero;
 	}
+	
+	/**
+	 * Get dragons arrayList.
+	 * 
+	 * @return array with the dragons
+	 * 
+	 */
 	
 	public ArrayList<Dragon> getDragons(){
 		return dragons;
