@@ -86,6 +86,7 @@ public class GamePanel extends JPanel{
 		statusPanel.setBackground(Color.BLACK);
 		JButton newGame = new JButton("Novo Jogo");
 		JButton saveGame = new JButton("Gravar Jogo");
+		JButton definitions = new JButton("Definicoes");
 		
 		newGame.addActionListener(new ActionListener(){
 
@@ -101,9 +102,18 @@ public class GamePanel extends JPanel{
 				mazePanel.saveGameStatus();
 			}
 		});
+		definitions.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.settings();
+				requestFocus();
+			}
+		});
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.add(newGame);
 		buttonsPanel.add(saveGame);
+		buttonsPanel.add(definitions);
 		buttonsPanel.setBackground(Color.BLACK);
 		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
 		statusPanel.add(buttonsPanel, BorderLayout.NORTH);

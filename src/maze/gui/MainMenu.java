@@ -16,6 +16,7 @@ public class MainMenu extends JPanel {
 	private Gui frame;
 	private static final JButton loadGame = new JButton("Carregar Jogo");
 	private static final JButton newGame = new JButton("Novo Jogo");
+	private static final JButton settings = new JButton("Definicoes");
 	private static final JButton exit = new JButton("Sair");
 	
 	public MainMenu(final Gui frame){
@@ -36,6 +37,14 @@ public class MainMenu extends JPanel {
 
 		});
 		add(loadGame);
+		settings.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+		    {
+				frame.settings();
+		    }
+
+		});
+		add(settings);
 		exit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {

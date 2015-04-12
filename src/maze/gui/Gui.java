@@ -22,7 +22,6 @@ public class Gui extends JFrame{
 	    setResizable(true);
 	    setVisible(true);
 	    mainMenu();
-	    settings();
 	}
 	
 	public void definitions(){
@@ -75,7 +74,6 @@ public class Gui extends JFrame{
 	
 	public void settings(){
 		new SettingsDialog(keys);
-		pack();
 	}
 
 	public static Keys getKeys() {

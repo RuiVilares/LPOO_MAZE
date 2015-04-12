@@ -37,23 +37,28 @@ public class Keys {
 	}
 
 	public void setKeyUp(int keyUp) {
-		this.keyUp = keyUp;
+		if(keyUp != keyDown && keyUp != keyLeft && keyUp != keyRight && keyUp != specialKey)
+			this.keyUp = keyUp;
 	}
 
 	public void setKeyDown(int keyDown) {
-		this.keyDown = keyDown;
+		if(keyDown != keyUp && keyDown != keyLeft && keyDown != keyRight && keyDown != specialKey)
+			this.keyDown = keyDown;
 	}
 
 	public void setKeyLeft(int keyLeft) {
-		this.keyLeft = keyLeft;
+		if(keyLeft != keyUp && keyLeft != keyDown && keyLeft != keyRight && keyLeft != specialKey)
+			this.keyLeft = keyLeft;
 	}
 
 	public void setKeyRight(int keyRight) {
-		this.keyRight = keyRight;
+		if(keyRight != keyUp && keyRight != keyDown && keyRight != keyLeft && keyRight != specialKey)
+			this.keyRight = keyRight;
 	}
 
 	public void setSpecialKey(int specialKey) {
-		this.specialKey = specialKey;
+		if(specialKey == KeyEvent.VK_ALT || specialKey == KeyEvent.VK_CONTROL)
+			this.specialKey = specialKey;
 	}
 	
 	public void loadKeys(String path){

@@ -22,9 +22,8 @@ public class SettingsDialog extends JDialog {
 	
 	public SettingsDialog(Keys keys) {
 		setLocationRelativeTo(null);
+		setTitle("Definicoes");
 		setModal(true);
-		setTitle("Defenicoes");
-		setVisible(true);
 		setBackground(Color.BLACK);
 		setLayout(new GridLayout(5,3));
 		
@@ -96,7 +95,7 @@ public class SettingsDialog extends JDialog {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						getKeys().setKeyDown(e.getKeyCode());
-						keyUp.setText(KeyEvent.getKeyText(getKeys().getKeyUp()));
+						keyDown.setText(KeyEvent.getKeyText(getKeys().getKeyDown()));
 						dialog.dispose();
 					}
 
@@ -134,7 +133,7 @@ public class SettingsDialog extends JDialog {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						getKeys().setKeyLeft(e.getKeyCode());
-						keyUp.setText(KeyEvent.getKeyText(getKeys().getKeyUp()));
+						keyLeft.setText(KeyEvent.getKeyText(getKeys().getKeyLeft()));
 						dialog.dispose();
 					}
 
@@ -172,7 +171,7 @@ public class SettingsDialog extends JDialog {
 					@Override
 					public void keyPressed(KeyEvent e) {
 						getKeys().setKeyRight(e.getKeyCode());
-						keyUp.setText(KeyEvent.getKeyText(getKeys().getKeyUp()));
+						keyRight.setText(KeyEvent.getKeyText(getKeys().getKeyRight()));
 						dialog.dispose();
 					}
 
@@ -189,19 +188,46 @@ public class SettingsDialog extends JDialog {
 		});
 		add(buttonRight);
 		
-		add(new JLabel ("COMBINAR PARA LANCAR DARDO:\t\t"));
+		add(new JLabel ("COMBINAR PARA LANCAR DARDO (CTRL OU ALT):\t\t"));
 		add(keySpecial);
-		JButton buttonSpecial =new JButton("Modificar");
+		JButton buttonSpecial = new JButton("Trocar");
 		buttonSpecial.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				final JDialog dialog = new JDialog();
+				dialog.setLocationRelativeTo(null);
+				dialog.setModal(true);
+				dialog.add(new JLabel("Press the new key!"));
+				dialog.addKeyListener(new KeyListener(){
+
+					@Override
+					public void keyTyped(KeyEvent e) {
+
+					}
+
+					@Override
+					public void keyPressed(KeyEvent e) {
+						getKeys().setSpecialKey(e.getKeyCode());
+						keySpecial.setText(KeyEvent.getKeyText(getKeys().getSpecialKey()));
+						dialog.dispose();
+					}
+
+					@Override
+					public void keyReleased(KeyEvent e) {
+
+					}
+
+				});
+				dialog.pack();
+				dialog.setVisible(true);
 				
 			}
 			
 		});
 		add(buttonSpecial);
 		pack();
+		setVisible(true);
 	}
 
 	public Keys getKeys() {

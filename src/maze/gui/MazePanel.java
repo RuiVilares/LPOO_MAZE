@@ -34,11 +34,8 @@ public class MazePanel extends JPanel{
 	private Maze maze;
 	private GameListener listener;
 	
-	
-	
 	public MazePanel(Maze maze){
 		this.maze = maze;
-		System.out.println(maze.getSize());
 		setLayout(new GridLayout(maze.getSize(),maze.getSize()));
 		setBackground(Color.BLACK);
 		setFocusable(true);
