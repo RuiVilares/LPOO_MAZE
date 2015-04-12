@@ -13,13 +13,16 @@ import maze.logic.Maze;
 public class Definitions extends JPanel{
 	
 	private Gui frame;
-	private JButton next;
-	private String currentMode;
+	private final JButton next;
+
 	private JLabel mode;
 	private JLabel spitFire;
 	private JLabel dragonBehavior;
 	private JLabel numberOfDragons;
+	private JLabel numberOfDarts;
 	private JSpinner dragonsSpinner;
+	private JSpinner dartsSpinner;
+	private String currentMode;
 	private JComboBox<String> modeComboBox;
 	private JComboBox<String> behaviorComboBox;
 	private JComboBox<String> fireComboBox;
@@ -28,10 +31,10 @@ public class Definitions extends JPanel{
 	public Definitions(Gui frame){
 		this.frame = frame;
 		
-		setLayout(new GridLayout(5,2));
+		setLayout(new GridLayout(6,2));
 		setBackground(Color.GRAY);
 		
-		String[] modes = { "Classic Mode", "Random Mode"};
+		String[] modes = { "Classic Mode", "Random Mode", "Custom Mode"};
 		String[] fire = { "Yes", "No"};
 		String[] behavior = { "Igle", "Random Behavior", "Sleppin Behavior"};
 		
@@ -45,6 +48,8 @@ public class Definitions extends JPanel{
 				if(!result.equals(currentMode))
 					if(result.equals("Random Mode"))
 						updateToRandom();
+					else if(result.equals("Custom Mode"))
+						updateToCustom();
 					else
 						updateToClassic();
 			}	
@@ -56,9 +61,12 @@ public class Definitions extends JPanel{
 		mode = new JLabel("Mode:");
 		spitFire = new JLabel("Can the dragon spit fire: ");
 		dragonBehavior = new JLabel("Choose dragon mode: ");
+		SpinnerModel model1 = new SpinnerNumberModel(1,1,5,1);
+		SpinnerModel model2 = new SpinnerNumberModel(1,1,5,1);
+		numberOfDarts = new JLabel("Choose number of darts: ");
+		dartsSpinner = new JSpinner(model1);
 		numberOfDragons = new JLabel("Choose number of dragons: ");
-		SpinnerModel model = new SpinnerNumberModel(1,1,5,1);
-		dragonsSpinner = new JSpinner(model);
+		dragonsSpinner = new JSpinner(model2);
 		
 		
 		next = new JButton("Next");
@@ -101,12 +109,39 @@ public class Definitions extends JPanel{
 				break;
 			}
 			int dragonsNumber = (Integer)dragonsSpinner.getValue();
-			maze = new Maze(behavior,fire, dragonsNumber);
+			int dartsNumber = (Integer)dartsSpinner.getValue();
+			maze = new Maze(behavior,fire, dragonsNumber, dartsNumber);
+			frame.maze(maze);
 		}
-		else
+		else if(((String)modeComboBox.getSelectedItem()).equals("Custom Mode")){
+			int fire = 0;
+			int behavior = 0;
+			switch(((String)behaviorComboBox.getSelectedItem())){
+			case "Igle":
+				behavior = 1;
+				break;
+			case "Random Behavior":
+				behavior = 2;
+				break;
+			case "Sleppin Behavior":
+				behavior = 3;
+				break;
+			}
+			switch(((String)fireComboBox.getSelectedItem())){
+			case "Yes":
+				fire = 1;
+				break;
+			case "No":
+				fire = 2;
+				break;
+			}
+			frame.interactiveBuilder(behavior,fire,11);
+		}
+		else{
 			maze = new Maze();
-		
-		frame.maze(maze);
+			frame.maze(maze);
+		}
+	
 	}
 
 	private void updateToClassic() {
@@ -122,14 +157,46 @@ public class Definitions extends JPanel{
 
 
 	private void updateToRandom() {
-		currentMode = "Random Mode";
 		remove(next);
-		add(dragonBehavior);
-		add(behaviorComboBox);
-		add(spitFire);
-		add(fireComboBox);
-		add(numberOfDragons);
-		add(dragonsSpinner);
+		if(currentMode == "Classic Mode"){
+			add(dragonBehavior);
+			add(behaviorComboBox);
+			add(spitFire);
+			add(fireComboBox);
+			add(numberOfDragons);
+			add(dragonsSpinner);
+			add(numberOfDarts);
+			add(dartsSpinner);
+			
+		}
+		else{
+			add(numberOfDragons);
+			add(dragonsSpinner);
+			add(numberOfDarts);
+			add(dartsSpinner);
+		}
+		currentMode = "Random Mode";
+		add(next);
+		frame.pack();
+		revalidate();
+		repaint();
+	}
+	private void updateToCustom() {
+		remove(next);
+		if(currentMode == "Classic Mode"){
+			remove(next);
+			add(dragonBehavior);
+			add(behaviorComboBox);
+			add(spitFire);
+			add(fireComboBox);
+		}
+		else{
+			remove(numberOfDragons);
+			remove(dragonsSpinner);
+			remove(numberOfDarts);
+			remove(dartsSpinner);
+		}
+		currentMode = "Custom Mode";
 		add(next);
 		frame.pack();
 		revalidate();

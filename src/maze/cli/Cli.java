@@ -16,7 +16,7 @@ public class Cli {
 		if(gameMode == 1)
 			 maze = new Maze();
 		else
-			maze = new Maze(dragonMode(), dragonSpitFire(), dragonSize());
+			maze = new Maze(dragonMode(), dragonSpitFire(), dragonSize(), dartsSize());
 		
 		char cmd;
 		do {
@@ -36,6 +36,16 @@ public class Cli {
 		}
 	}
 	
+	private int dartsSize() {
+		int optionD;
+		do {
+			System.out.print("\n\nChoose numbre of darts: \n\n" + "> ");
+			reader = new Scanner(System.in);
+			optionD = reader.nextInt();
+		} while (optionD < 1 || optionD > 5);
+		return optionD;
+	}
+
 	public int gameMode(){
 		int optionG;
 		do{

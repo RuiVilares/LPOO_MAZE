@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements KeyListener{
 		
 		statusPanel.add(newGame);
 		statusPanel.add(saveGame);
-		
+		//String status = mazePanel.getMaze().stateToString();
 		
 		add(statusPanel, BorderLayout.EAST);
 		add(mazePanel, BorderLayout.CENTER);

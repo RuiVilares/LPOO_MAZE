@@ -7,6 +7,6 @@ import maze.gui.Gui;
 public class Game {
 	public static void main(String[] args) {
 		new Gui();
-		//new Cli();
+		new Cli();
 	}
 }

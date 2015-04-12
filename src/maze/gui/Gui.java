@@ -13,6 +13,7 @@ public class Gui extends JFrame{
 	private JPanel panel;
 	
 	public Gui(){
+		setPreferredSize(new Dimension(500, 500));
 		panel = null;
 		setLocationRelativeTo(null);
 		setTitle("Labirinto");
@@ -40,7 +41,6 @@ public class Gui extends JFrame{
 	}
 	
 	public void maze(Maze maze){
-		setPreferredSize(new Dimension(500, 500));
         setLayout(new BorderLayout());
 		setFocusTraversalKeysEnabled(false);
 		remove(panel);
@@ -60,12 +60,12 @@ public class Gui extends JFrame{
 		pack();
 		panel.requestFocus();
 	}
-	public void interectiveBuilder() {
+	public void interactiveBuilder(int dragonMode,int spitsFire, int size) {
 		if(panel != null){
 			remove(panel);
 		}
 		setFocusTraversalKeysEnabled(false);
-		panel = new MazeCostomBuilder(1,1,11);
+		panel = new MazeCustomPanel(dragonMode, spitsFire, size, this);
 		getContentPane().add(panel);
 		pack();
 		panel.requestFocus();

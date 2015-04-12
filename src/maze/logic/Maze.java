@@ -22,16 +22,14 @@ public class Maze implements Serializable{
 		dragons = new ArrayList<Dragon>();
 		darts = new ArrayList<Dart>();
 		
-		builder = new Builder(1);
-		builder.setDragonMode(1);
-		builder.setDragonSpitFire(2);
+		builder = new Builder();
 		
 		
 		board = builder.createBoard();
-		hero = builder.createHero(board);
-		exit = builder.createExit(board);
-		sword = builder.createSword(board, hero);
-		dragons.add(builder.createDragon(board, hero));
+		hero = builder.createHero();
+		exit = builder.createExit();
+		sword = builder.createSword();
+		dragons.add(builder.createDragon());
 		shield = null;
 		hero.noProtectionNeeded();
 	}
@@ -42,7 +40,11 @@ public class Maze implements Serializable{
 		exit = new Exit(-1,-1);
 		hero = new Hero (-1,-1);
 		sword = new Sword(-1,-1);
-		char[][] maze = array;
+		char[][] maze = new char[array.length][array[0].length];
+	    for (int i = 0; i < array.length; i++) {
+	        System.arraycopy(array[i], 0, maze[i], 0, array[i].length);
+	    }
+		
 		boolean spitsFire = true;
 		Dragon.Behaviour behavior = Dragon.Behaviour.Idle;
 		
@@ -59,8 +61,8 @@ public class Maze implements Serializable{
 		
 		dragons = new ArrayList<Dragon>();
 		darts = new ArrayList<Dart>();
-		for(int i = 0; i < array.length; i++){
-			for(int j = 0; j < array.length; j++){
+		for(int i = 0; i < maze.length; i++){
+			for(int j = 0; j < maze.length; j++){
 				switch(maze[i][j]){
 				case 'H':
 					hero = new Hero(j,i);
@@ -79,44 +81,47 @@ public class Maze implements Serializable{
 					maze[i][j] = ' ';
 					break;
 				case 'D':
-					dragons.add(new Dragon(i,j,behavior,spitsFire));
+					dragons.add(new Dragon(j,i,behavior,spitsFire));
 					maze[i][j] = ' ';
 					break;
 				case '/':
-					darts.add(new Dart(i,j));
+					darts.add(new Dart(j,i));
 					maze[i][j] = ' ';
 					break;
 				default:
+					break;
 				}
 			}
 		}
 		board = new Board(maze);
 	}
 
-	public Maze(int dragonMode, int dragonSpitFire, int nDragons) {
+	public Maze(int dragonMode, int dragonSpitFire, int nDragons, int nDarts) {
 		done = false;
 		
 		dragons = new ArrayList<Dragon>();
 		darts = new ArrayList<Dart>();
-		builder = new Builder(2);
-		
-		builder.setDragonMode(dragonMode);
-		builder.setDragonSpitFire(dragonSpitFire);
+		builder = new Builder(dragonMode,dragonSpitFire);
 		
 		board = builder.createBoard();
-		hero = builder.createHero(board);
-		exit = builder.createExit(board);
-		sword = builder.createSword(board, hero);
-		shield = builder.createShield(board, hero);
+		hero = builder.createHero();
+		exit = builder.createExit();
+		sword = builder.createSword();
+		shield = builder.createShield();
 		
 		if(!builder.getDragonSpitFire()){
 			hero.noProtectionNeeded();
 		}
+		
 		do {
-			dragons.add(builder.createDragon(board, hero));
-			darts.add(builder.createDart(board));
+			dragons.add(builder.createDragon());
 			nDragons--;
 		} while (nDragons > 0);
+		
+		do {
+			darts.add(builder.createDart());
+			nDarts--;
+		} while (nDarts > 0);
 	}
 
 	public String toString() {
@@ -466,5 +471,9 @@ public class Maze implements Serializable{
 	
 	public ArrayList<Dragon> getDragons(){
 		return dragons;
+	}
+	
+	public boolean checkViability(){
+		return true;
 	}
 }

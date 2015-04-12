@@ -3,23 +3,25 @@ package maze.logic;
 import java.util.Random;
 
 public class Builder {
-	private static int size = 11;
+	private final int size;
 	private boolean random;
 	private Dragon.Behaviour dragonMode;
 	private boolean spitFire;
-
-	public Builder(int random) {
+	private Board board;
+	private Exit exit;
+	private Hero hero;
+	private Sword sword;
+	private Shield shield;
+	
+	public Builder() {
 		this.spitFire = false;
 		this.dragonMode = Dragon.Behaviour.Idle;
-		if (random == 1){
-			size = 10;
-			this.random = false;
-			}
-		else
-			this.random = true;
+		this.size = 10;
+		this.random = false;
 	}
-
-	public void setDragonMode(int optionD) {
+	public Builder(int optionD, int optionS) {
+		this.random = true;
+		this.size = 11;
 		switch (optionD) {
 		case 1:
 			this.dragonMode = Dragon.Behaviour.Idle;
@@ -33,9 +35,7 @@ public class Builder {
 		default:
 			break;
 		};
-	}
-
-	public void setDragonSpitFire(int optionS) {
+		
 		if (optionS == 1)
 			this.spitFire = true;
 		else
@@ -52,20 +52,23 @@ public class Builder {
 
 	public Board createBoard() {
 		if (!random)
-			return new Board();
+			board = new Board();
+			
 		else
-			return new Board(size);
+			board =  new Board(size);
+		return board;
 	}
 
-	public Hero createHero(Board board) {
+	public Hero createHero() {
 		if (!random)
-			return new Hero(1, 1);
+			hero = new Hero(1, 1);
 		else {
-			return generateHero(board);
+			hero = generateHero();
 		}
+		return hero;
 	}
 
-	private Hero generateHero(Board board) {
+	private Hero generateHero() {
 		Random r = new Random();
 		int x = 0;
 		int y = 0;
@@ -77,17 +80,17 @@ public class Builder {
 
 	}
 
-	public Sword createSword(Board board, Hero hero) {
+	public Sword createSword() {
 		if (!random)
-			return new Sword(1, 8);
+			sword = new Sword(1, 8);
 		else {
-			return generateSword(board, hero);
+			sword = generateSword();
 		}
+		return sword;
 	}
 
-	private Sword generateSword(Board board, Hero hero) {
+	private Sword generateSword() {
 		Random r = new Random();
-		Sword sword;
 		int x = 0;
 		int y = 0;
 		do {
@@ -98,9 +101,8 @@ public class Builder {
 		return sword;
 	}
 	
-	public Shield createShield(Board board, Hero hero) {
+	public Shield createShield() {
 		Random r = new Random();
-		Shield shield;
 		int x = 0;
 		int y = 0;
 		do {
@@ -111,15 +113,16 @@ public class Builder {
 		return shield;
 	}
 
-	public Exit createExit(Board board) {
+	public Exit createExit() {
 		if (!random)
-			return new Exit(9, 5);
+			exit = new Exit(9, 5);
 		else {
-			return generateExit(board);
+			exit = generateExit();
 		}
+		return exit;
 	}
 
-	private Exit generateExit(Board board) {
+	private Exit generateExit() {
 		Random r = new Random();
 		int x = 0;
 		int y = 0;
@@ -153,15 +156,15 @@ public class Builder {
 				&& x != 0 && x != size - 1));
 	}
 
-	public Dragon createDragon(Board board, Hero hero) {
+	public Dragon createDragon() {
 		if (!random)
 			return new Dragon(1, 3, dragonMode, false);
 		else {
-			return generateDragon(board, hero);
+			return generateDragon();
 		}
 	}
 
-	private Dragon generateDragon(Board board, Hero hero) {
+	private Dragon generateDragon() {
 		Random r = new Random();
 		int x = 0;
 		int y = 0;
@@ -174,15 +177,15 @@ public class Builder {
 		return dragon;
 	}
 	
-	public Dart createDart(Board board) {
+	public Dart createDart() {
 		if (!random)
 			return new Dart(1,2);
 		else {
-			return generateDart(board);
+			return generateDart();
 		}
 	}
 
-	private Dart generateDart(Board board) {
+	private Dart generateDart() {
 		Random r = new Random();
 		int x = 0;
 		int y = 0;
