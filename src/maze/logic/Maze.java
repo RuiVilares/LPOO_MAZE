@@ -15,6 +15,7 @@ public class Maze implements Serializable{
 	private Hero hero;
 	private Sword sword;
 	private Shield shield;
+	private int totalDragons;
 	
 	public Maze(){
 		done = false;
@@ -32,6 +33,7 @@ public class Maze implements Serializable{
 		dragons.add(builder.createDragon());
 		shield = null;
 		hero.noProtectionNeeded();
+		totalDragons = dragons.size();
 	}
 	
 	public Maze(int dragonMode, int dragonSpitFire, char [][] array){
@@ -94,6 +96,7 @@ public class Maze implements Serializable{
 			}
 		}
 		board = new Board(maze);
+		totalDragons = dragons.size();
 	}
 
 	public Maze(int dragonMode, int dragonSpitFire, int nDragons, int nDarts) {
@@ -122,6 +125,8 @@ public class Maze implements Serializable{
 			darts.add(builder.createDart());
 			nDarts--;
 		} while (nDarts > 0);
+		
+		totalDragons = dragons.size();
 	}
 
 	public String toString() {
@@ -151,13 +156,11 @@ public class Maze implements Serializable{
 							maze += "m";
 					} else
 						maze += dragons.get(dragonIndex) + "";
-					//
 				} else if (dartIndex != -1) {
 					if (!darts.get(dartIndex).getTaked())
 						maze += darts.get(dartIndex) + "";
 					else
 						maze += " ";
-					//
 				} else if (i == sword.getY() && j == sword.getX()
 						&& !hero.isArmed() && !swordEqualsAnyDragon()) {
 					maze += sword + "";
@@ -174,13 +177,12 @@ public class Maze implements Serializable{
 	}
 
 	public String stateToString() {
-		String def = "Armed: " + hero.isArmed() + "  Shield: "
-				+ hero.isProtection() + "  Number of Darts: " + hero.getDarts()
-				+ "\n" + "Dragons: " + dragons.size() + "/" + dragons.size()
-				+ "  SpitFire: " + dragons.get(0).spitsFire()
-				+ "  CanSleep: " + dragons.get(0).canSleep() + "  CanMove: "
-				+ dragons.get(0).canMove() + "  Sleeping: "
-				+ dragons.get(0).isSleeping() + "\n";
+		String def = "Armed: " + hero.isArmed() + " \nShield: "
+				+ hero.isProtection() + " \nNumber of Darts: " + hero.getDarts()
+				+ " \n" + "Dragons: " + dragons.size() + "/" + totalDragons
+				+ " \nSpitFire: " + builder.getDragonSpitFire()
+				+ " \nCanSleep: " + builder.getSleep() + " \nCanMove: "
+				+ builder.canMove() + "\n";
 		return def;
 	}
 
@@ -423,7 +425,6 @@ public class Maze implements Serializable{
 			case 'i':
 				hero.decDarts();
 				do {
-					System.out.println("Y: " + y);
 					if (killDragonsInCell(x, y))
 						break;
 					y--;
@@ -432,7 +433,6 @@ public class Maze implements Serializable{
 			case 'l':
 				hero.decDarts();
 				do {
-					System.out.println("X: " + x);
 					if (killDragonsInCell(x, y))
 						break;
 					x++;
@@ -441,7 +441,6 @@ public class Maze implements Serializable{
 			case 'j':
 				hero.decDarts();
 				do {
-					System.out.println("X: " + x);
 					if (killDragonsInCell(x, y))
 						break;
 					x--;
@@ -450,7 +449,6 @@ public class Maze implements Serializable{
 			case 'k':
 				hero.decDarts();
 				do {
-					System.out.println("Y: " + y);
 					if (killDragonsInCell(x, y))
 						break;
 					y++;

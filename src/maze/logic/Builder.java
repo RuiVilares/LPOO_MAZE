@@ -197,4 +197,20 @@ public class Builder {
 		} while (board.getCell(x, y) == 'X');
 		return dart;
 	}
+	public boolean getSleep() {
+		if(dragonMode == Dragon.Behaviour.Sleep){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public boolean canMove() {
+		if(dragonMode == Dragon.Behaviour.Idle){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
 }

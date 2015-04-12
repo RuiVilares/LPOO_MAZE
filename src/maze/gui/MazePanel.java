@@ -1,12 +1,8 @@
 package maze.gui;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -161,46 +157,7 @@ public class MazePanel extends JPanel{
 		catch(IOException e){
 		}
 	}
-	public void changeCursor(String image) {
-		Cursor c = null;
-		switch(image){
-		case "wall":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(wall.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "wall");
-			break;
-		case "grass":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(grass.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "grass");
-			break;
-		case "dragon":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(dragon.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "dragon");
-			break;
-		case "sword":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(sword.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "sword");
-			break;
-		case "shield":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(shield.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "shield");
-			break;
-		case "hero":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(hero.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "hero");
-			break;
-		case "darts":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(darts.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "darts");
-			break;
-		case "door":
-			c = Toolkit.getDefaultToolkit().createCustomCursor(door.getScaledInstance(getWidth()/11, getHeight()/11, Image.SCALE_SMOOTH) , new Point(getX(),
-				    getY()), "door");
-			break;
-		default:
-			break;
-		}
-		setCursor (c);
-	}
+
 	public void setMaze(Maze maze) {
 		this.maze = maze;
 		repaint();

@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements KeyListener{
 	
 	private MazePanel mazePanel;
 	private JPanel statusPanel;
+	private JTextArea status;
 	
 	public GamePanel(final Gui frame, Maze maze){
 		
@@ -38,7 +39,8 @@ public class GamePanel extends JPanel implements KeyListener{
 		});
 		
 		statusPanel = new JPanel();
-		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.PAGE_AXIS));
+		statusPanel.setLayout(new BorderLayout());
+		statusPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		statusPanel.setBackground(Color.BLACK);
 		JButton newGame = new JButton("Novo Jogo");
 		JButton saveGame = new JButton("Gravar Jogo");
@@ -57,10 +59,19 @@ public class GamePanel extends JPanel implements KeyListener{
 				mazePanel.saveGameStatus();
 			}
 		});
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.add(newGame);
+		buttonsPanel.add(saveGame);
+		buttonsPanel.setBackground(Color.BLACK);
+		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
+		statusPanel.add(buttonsPanel, BorderLayout.NORTH);
 		
-		statusPanel.add(newGame);
-		statusPanel.add(saveGame);
-		//String status = mazePanel.getMaze().stateToString();
+		status = new JTextArea(mazePanel.getMaze().stateToString());
+		status.setForeground(Color.WHITE);
+		status.setBackground(Color.BLACK);
+		status.setEditable(false);
+		
+		statusPanel.add(status, BorderLayout.SOUTH);
 		
 		add(statusPanel, BorderLayout.EAST);
 		add(mazePanel, BorderLayout.CENTER);
@@ -68,18 +79,31 @@ public class GamePanel extends JPanel implements KeyListener{
     public void keyPressed(KeyEvent e) {
     	switch(e.getKeyCode()){
     	case KeyEvent.VK_UP:
-    		mazePanel.updateMaze('w');
+    		if(!e.isAltDown())
+    			mazePanel.updateMaze('w');
+    		else
+    			mazePanel.updateMaze('i');
     		break;
     	case KeyEvent.VK_RIGHT:
-    		mazePanel.updateMaze('d');
+    		if(!e.isAltDown())
+    			mazePanel.updateMaze('d');
+    		else
+    			mazePanel.updateMaze('l');
     		break;
     	case KeyEvent.VK_DOWN:
-    		mazePanel.updateMaze('s');
+    		if(!e.isAltDown())
+    			mazePanel.updateMaze('s');
+    		else
+    			mazePanel.updateMaze('k');
     		break;
     	case KeyEvent.VK_LEFT:
-    		mazePanel.updateMaze('a');
+    		if(!e.isAltDown())
+    			mazePanel.updateMaze('a');
+    		else
+    			mazePanel.updateMaze('j');
     		break;
     	}
+    	status.setText(mazePanel.getMaze().stateToString());
     	
     }
 

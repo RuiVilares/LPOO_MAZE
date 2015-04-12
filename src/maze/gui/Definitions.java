@@ -36,7 +36,7 @@ public class Definitions extends JPanel{
 		
 		String[] modes = { "Classic Mode", "Random Mode", "Custom Mode"};
 		String[] fire = { "Yes", "No"};
-		String[] behavior = { "Igle", "Random Behavior", "Sleppin Behavior"};
+		String[] behavior = { "Igle", "Random Behavior", "Slepping Behavior"};
 		
 		currentMode = "Classic Mode";
 		modeComboBox = new JComboBox<String>(modes);
@@ -96,7 +96,7 @@ public class Definitions extends JPanel{
 			case "Random Behavior":
 				behavior = 2;
 				break;
-			case "Sleppin Behavior":
+			case "Slepping Behavior":
 				behavior = 3;
 				break;
 			}
@@ -123,7 +123,7 @@ public class Definitions extends JPanel{
 			case "Random Behavior":
 				behavior = 2;
 				break;
-			case "Sleppin Behavior":
+			case "Slepping Behavior":
 				behavior = 3;
 				break;
 			}
