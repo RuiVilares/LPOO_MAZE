@@ -12,15 +12,57 @@ import java.awt.event.KeyListener;
 
 
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel implements KeyListener{
+public class GamePanel extends JPanel{
 	
 	private MazePanel mazePanel;
 	private JPanel statusPanel;
 	private JTextArea status;
-	
 	public GamePanel(final Gui frame, Maze maze){
-		
-		addKeyListener(this);
+		addKeyListener(new KeyListener(){
+		    public void keyPressed(KeyEvent e) {
+		    	boolean special;
+		    	if(Gui.getKeys().getSpecialKey() == KeyEvent.VK_ALT){
+		    		special = e.isAltDown();
+		    	}
+		    	else{
+		    		special = e.isControlDown();
+		    	}
+		    	if(e.getKeyCode() == Gui.getKeys().getKeyUp()){
+		    		if(!special)
+		    			mazePanel.updateMaze('w');
+		    		else
+		    			mazePanel.updateMaze('i');
+		    	}
+		    	else if(e.getKeyCode() == Gui.getKeys().getKeyRight()){
+		    		if(!special)
+		    			mazePanel.updateMaze('d');
+		    		else
+		    			mazePanel.updateMaze('l');
+		    	}
+		    	else if(e.getKeyCode() == Gui.getKeys().getKeyDown()){
+		    		if(!special)
+		    			mazePanel.updateMaze('s');
+		    		else
+		    			mazePanel.updateMaze('k');
+		    	}
+		    	else if(e.getKeyCode() == Gui.getKeys().getKeyLeft()){
+		    		if(!special)
+		    			mazePanel.updateMaze('a');
+		    		else
+		    			mazePanel.updateMaze('j');
+		    	}
+		    	status.setText(mazePanel.getMaze().stateToString());
+		    	
+		    }
+
+		    public void keyReleased(KeyEvent e) {
+		    	
+		    }
+		    public void keyTyped(KeyEvent e) {
+		    	
+		    }
+			
+		});
 		setLayout(new BorderLayout());
 		setFocusable(true);
 		
@@ -49,7 +91,7 @@ public class GamePanel extends JPanel implements KeyListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.getDefinitions();
+				frame.definitions();
 			}
 		});
 		saveGame.addActionListener(new ActionListener(){
@@ -76,41 +118,5 @@ public class GamePanel extends JPanel implements KeyListener{
 		add(statusPanel, BorderLayout.EAST);
 		add(mazePanel, BorderLayout.CENTER);
 	};
-    public void keyPressed(KeyEvent e) {
-    	switch(e.getKeyCode()){
-    	case KeyEvent.VK_UP:
-    		if(!e.isAltDown())
-    			mazePanel.updateMaze('w');
-    		else
-    			mazePanel.updateMaze('i');
-    		break;
-    	case KeyEvent.VK_RIGHT:
-    		if(!e.isAltDown())
-    			mazePanel.updateMaze('d');
-    		else
-    			mazePanel.updateMaze('l');
-    		break;
-    	case KeyEvent.VK_DOWN:
-    		if(!e.isAltDown())
-    			mazePanel.updateMaze('s');
-    		else
-    			mazePanel.updateMaze('k');
-    		break;
-    	case KeyEvent.VK_LEFT:
-    		if(!e.isAltDown())
-    			mazePanel.updateMaze('a');
-    		else
-    			mazePanel.updateMaze('j');
-    		break;
-    	}
-    	status.setText(mazePanel.getMaze().stateToString());
-    	
-    }
-
-    public void keyReleased(KeyEvent e) {
-    	
-    }
-    public void keyTyped(KeyEvent e) {
-    	
-    }
+	
 }

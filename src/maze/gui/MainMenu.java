@@ -23,7 +23,7 @@ public class MainMenu extends JPanel {
 		newGame.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
-				frame.getDefinitions();
+				frame.definitions();
 		    }
 
 		});

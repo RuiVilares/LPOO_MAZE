@@ -474,4 +474,7 @@ public class Maze implements Serializable{
 	public boolean checkViability(){
 		return true;
 	}
+	public int getSize(){
+		return board.getSize();
+	}
 }

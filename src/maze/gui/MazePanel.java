@@ -38,8 +38,8 @@ public class MazePanel extends JPanel{
 	
 	public MazePanel(Maze maze){
 		this.maze = maze;
-		
-		setLayout(new GridLayout(11,11));
+		System.out.println(maze.getSize());
+		setLayout(new GridLayout(maze.getSize(),maze.getSize()));
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		try{
@@ -80,12 +80,13 @@ public class MazePanel extends JPanel{
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
 		String mazeString = maze + "";
+		int size = maze.getSize();
 		int height = getHeight();
 		int width = getWidth();
 		int x1 = 0;
-		int x2 = width/11;
+		int x2 = width/size;
 		int y1 = 0;
-		int y2 = height/11;
+		int y2 = height/size;
 		for(int i = 0; i < mazeString.length(); i++){
 			switch(mazeString.charAt(i)){
 			case 'X':
@@ -126,17 +127,17 @@ public class MazePanel extends JPanel{
 				break;
 			case '\n':
 				x1 = 0;
-				x2 = width/11;
-				y1 += height/11;
-				y2 += height/11;
+				x2 = width/size;
+				y1 += height/size;
+				y2 += height/size;
 				break;
 			default:
 				g.drawImage(dragon, x1, y1, x2, y2, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
 				break;
 			}
 			if(mazeString.charAt(i) != '\n'){
-				x1 += width/11;
-				x2 += width/11;
+				x1 += width/size;
+				x2 += width/size;
 			}
 		}
 	}

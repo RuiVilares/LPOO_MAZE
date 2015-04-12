@@ -138,7 +138,7 @@ public class MazeCustomPanel extends JPanel {
 		backButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				frame.getDefinitions();
+				frame.definitions();
 			}
 			
 		});

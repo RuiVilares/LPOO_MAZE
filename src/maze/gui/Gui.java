@@ -1,7 +1,6 @@
 package maze.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -11,19 +10,22 @@ import maze.logic.Maze;
 public class Gui extends JFrame{
 
 	private JPanel panel;
+	private static Keys keys;
 	
 	public Gui(){
-		setPreferredSize(new Dimension(500, 500));
+		setPreferredSize(new Dimension(600, 500));
 		panel = null;
+		keys = new Keys();
 		setLocationRelativeTo(null);
 		setTitle("Labirinto");
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setResizable(true);
 	    setVisible(true);
 	    mainMenu();
+	    settings();
 	}
 	
-	public void getDefinitions(){
+	public void definitions(){
 		if(panel != null){
 			remove(panel);
 		}
@@ -70,4 +72,15 @@ public class Gui extends JFrame{
 		pack();
 		panel.requestFocus();
 	}
+	
+	public void settings(){
+		new SettingsDialog(keys);
+		pack();
+	}
+
+	public static Keys getKeys() {
+		return keys;
+	}
+
+	
 }
