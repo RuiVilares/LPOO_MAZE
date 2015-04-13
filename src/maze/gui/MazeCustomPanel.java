@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import data_structures.Pair;
@@ -59,7 +60,7 @@ public class MazeCustomPanel extends JPanel {
 		
 		
 		buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(9,1));
+		buttonsPanel.setLayout(new GridLayout(10,1));
 		buttonsPanel.setBackground(Color.BLACK);
 		selectedPiece = '\0';
 		
@@ -147,7 +148,10 @@ public class MazeCustomPanel extends JPanel {
 		playButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				frame.maze(mazePanel.getMaze());
+				if(mazePanel.getMaze().checkViability())
+					frame.maze(mazePanel.getMaze());
+				else
+					JOptionPane.showMessageDialog(frame, "This maze is not playable");
 			}
 			
 		});

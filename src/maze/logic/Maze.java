@@ -38,6 +38,7 @@ public class Maze implements Serializable{
 	
 	public Maze(int dragonMode, int dragonSpitFire, char [][] array){
 		done = false;
+		builder = new Builder(dragonMode,dragonSpitFire,array.length);
 		shield = null;
 		exit = new Exit(-1,-1);
 		hero = new Hero (-1,-1);
@@ -475,7 +476,7 @@ public class Maze implements Serializable{
 	}
 	
 	public boolean checkViability(){
-		if(dragons.size() != 0 || !board.isViable() || hero.getX() == -1 || !exit.isAtBorder(board.getSize()) || !exit.accesible(board) ||
+		if(dragons.size() == 0 || !board.isViable() || hero.getX() == -1 || !exit.isAtBorder(board.getSize()) || !exit.accesible(board) ||
 				sword.getX() == -1){
 			return false;
 		}
