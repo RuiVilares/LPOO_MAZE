@@ -144,7 +144,7 @@ public class SimpleTests {
     @Test
     public void TesteRandomSleepWith3Dragons() 
     {
-    	Maze maze = new Maze(3,1,3,0);
+    	Maze maze = new Maze(11,3,1,3,0);
     	assertEquals(3, maze.getDragons().size());
     	assertTrue(maze.getDragons().get(0).spitsFire());
     	assertTrue(maze.getDragons().get(0).canSleep());

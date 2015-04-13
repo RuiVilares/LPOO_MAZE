@@ -76,7 +76,7 @@ public class Maze implements Serializable{
 					break;
 				case 'S':
 					exit = new Exit(j,i);
-					maze[i][j] = ' ';
+					maze[i][j] = 'X';
 					break;
 				case 'O':
 					shield = new Shield(j,i);
@@ -96,15 +96,18 @@ public class Maze implements Serializable{
 			}
 		}
 		board = new Board(maze);
+		if(!spitsFire){
+			hero.noProtectionNeeded();
+		}
 		totalDragons = dragons.size();
 	}
 
-	public Maze(int dragonMode, int dragonSpitFire, int nDragons, int nDarts) {
+	public Maze(int size, int dragonMode, int dragonSpitFire, int nDragons, int nDarts) {
 		done = false;
 		
 		dragons = new ArrayList<Dragon>();
 		darts = new ArrayList<Dart>();
-		builder = new Builder(dragonMode,dragonSpitFire);
+		builder = new Builder(dragonMode,dragonSpitFire,size);
 		
 		board = builder.createBoard();
 		hero = builder.createHero();
@@ -472,6 +475,13 @@ public class Maze implements Serializable{
 	}
 	
 	public boolean checkViability(){
+		if(dragons.size() != 0 || !board.isViable() || hero.getX() == -1 || !exit.isAtBorder(board.getSize()) || !exit.accesible(board) ||
+				sword.getX() == -1){
+			return false;
+		}
+		if(hero.isProtectionNeed() && shield.getX() == -1){
+			return false;
+		}
 		return true;
 	}
 	public int getSize(){

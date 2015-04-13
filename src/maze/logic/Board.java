@@ -147,4 +147,22 @@ public class Board implements Serializable{
 	public int getSize() {
 		return size;
 	}
+	
+	public boolean isViable(){
+		for(int i = 0; i < board.length; i++){
+			for(int j = 0; j < board.length; j++){
+				if(i == 0 || i == size-1){
+					if(board[i][j] != 'X'){
+						return false;
+					}
+				}
+				else if(j == 0 || j == size-1){
+					if(board[i][j] != 'X'){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

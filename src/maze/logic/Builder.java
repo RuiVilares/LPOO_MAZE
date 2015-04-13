@@ -19,9 +19,9 @@ public class Builder {
 		this.size = 10;
 		this.random = false;
 	}
-	public Builder(int optionD, int optionS) {
+	public Builder(int optionD, int optionS, int size) {
 		this.random = true;
-		this.size = 11;
+		this.size = size;
 		switch (optionD) {
 		case 1:
 			this.dragonMode = Dragon.Behaviour.Idle;
@@ -129,31 +129,9 @@ public class Builder {
 		do {
 			x = r.nextInt(board.getSize());
 			y = r.nextInt(board.getSize());
-		} while (!isAtBorder(x, y) || !accesible(board,x,y));
-		return new Exit(x, y);
-	}
-
-	private boolean accesible(Board board, int x, int y) {
-		if(x == 0 && board.getCell(x+1,y) == 'X'){
-			return false;
-		}
-		else if(x == size - 1 && board.getCell(x-1,y) == 'X'){
-			return false;
-		}
-		if(y == 0 && board.getCell(x,y+1) == 'X'){
-			return false;
-		}
-		else if(y == size - 1 && board.getCell(x,y-1) == 'X'){
-			return false;
-		}
-		else
-			return true;
-	}
-
-	private boolean isAtBorder(int x, int y) {
-		return (((x == 0 || x == size - 1) && y != 0 && y != size - 1) 
-				|| ((y == 0 || y == size -1)
-				&& x != 0 && x != size - 1));
+			exit = new Exit(x, y);
+		} while (!exit.isAtBorder(board.getSize()) || !exit.accesible(board));
+		return exit;
 	}
 
 	public Dragon createDragon() {

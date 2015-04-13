@@ -161,8 +161,9 @@ public class MazeCustomPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(selectedPiece != '\0'){
-					int y = e.getY() * 11 / mazePanel.getHeight();
-					int x = e.getX() * 11 / mazePanel.getWidth();
+					int size = mazePanel.getMaze().getSize();
+					int y = e.getY() * size / mazePanel.getHeight();
+					int x = e.getX() * size / mazePanel.getWidth();
 					mazeArray[y][x] = selectedPiece;
 					Pair pair = new Pair(x,y);
 					if(pair.equals(hero)){

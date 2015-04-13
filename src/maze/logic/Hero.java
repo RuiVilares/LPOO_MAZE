@@ -69,4 +69,8 @@ public class Hero extends Piece {
 	public int getDarts(){
 		return this.nDarts;
 	}
+
+	public boolean isProtectionNeed() {
+		return protectionNeed;
+	}
 }

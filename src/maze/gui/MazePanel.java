@@ -100,7 +100,7 @@ public class MazePanel extends JPanel{
 				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/3, 0, imageWidth/2, imageHeight/2, null);
 				break;
 			case 'Q':
-				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/6, imageHeight, imageWidth/3, imageHeight/2, null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/6, 0, imageWidth/3, imageHeight/2, null);
 				break;
 			case '\n':
 				x1 = 0;

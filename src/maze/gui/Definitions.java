@@ -20,6 +20,8 @@ public class Definitions extends JPanel{
 	private JLabel dragonBehavior;
 	private JLabel numberOfDragons;
 	private JLabel numberOfDarts;
+	private JLabel mazeSize;
+	private JSpinner sizeSpinner;
 	private JSpinner dragonsSpinner;
 	private JSpinner dartsSpinner;
 	private String currentMode;
@@ -31,7 +33,7 @@ public class Definitions extends JPanel{
 	public Definitions(Gui frame){
 		this.frame = frame;
 		
-		setLayout(new GridLayout(6,2));
+		setLayout(new GridLayout(7,2));
 		setBackground(Color.WHITE);
 		
 		String[] modes = { "Classic Mode", "Random Mode", "Custom Mode"};
@@ -61,8 +63,11 @@ public class Definitions extends JPanel{
 		mode = new JLabel("Mode:");
 		spitFire = new JLabel("Can the dragon spit fire: ");
 		dragonBehavior = new JLabel("Choose dragon mode: ");
-		SpinnerModel model1 = new SpinnerNumberModel(1,1,5,1);
+		mazeSize = new JLabel("Choose the maze size: ");
+		SpinnerModel model1 = new SpinnerNumberModel(0,0,5,1);
 		SpinnerModel model2 = new SpinnerNumberModel(1,1,5,1);
+		SpinnerModel model3 = new SpinnerNumberModel(11,11,31,2);
+		sizeSpinner = new JSpinner(model3);
 		numberOfDarts = new JLabel("Choose number of darts: ");
 		dartsSpinner = new JSpinner(model1);
 		numberOfDragons = new JLabel("Choose number of dragons: ");
@@ -110,12 +115,14 @@ public class Definitions extends JPanel{
 			}
 			int dragonsNumber = (Integer)dragonsSpinner.getValue();
 			int dartsNumber = (Integer)dartsSpinner.getValue();
-			maze = new Maze(behavior,fire, dragonsNumber, dartsNumber);
+			int size = (Integer)sizeSpinner.getValue();
+			maze = new Maze(size,behavior,fire, dragonsNumber, dartsNumber);
 			frame.maze(maze);
 		}
 		else if(((String)modeComboBox.getSelectedItem()).equals("Custom Mode")){
 			int fire = 0;
 			int behavior = 0;
+			int size = (Integer)sizeSpinner.getValue();
 			switch(((String)behaviorComboBox.getSelectedItem())){
 			case "Igle":
 				behavior = 1;
@@ -135,7 +142,7 @@ public class Definitions extends JPanel{
 				fire = 2;
 				break;
 			}
-			frame.interactiveBuilder(behavior,fire,11);
+			frame.interactiveBuilder(behavior,fire,size);
 		}
 		else{
 			maze = new Maze();
@@ -159,6 +166,8 @@ public class Definitions extends JPanel{
 	private void updateToRandom() {
 		remove(next);
 		if(currentMode == "Classic Mode"){
+			add(mazeSize);
+			add(sizeSpinner);
 			add(dragonBehavior);
 			add(behaviorComboBox);
 			add(spitFire);
@@ -185,6 +194,8 @@ public class Definitions extends JPanel{
 		remove(next);
 		if(currentMode == "Classic Mode"){
 			remove(next);
+			add(mazeSize);
+			add(sizeSpinner);
 			add(dragonBehavior);
 			add(behaviorComboBox);
 			add(spitFire);

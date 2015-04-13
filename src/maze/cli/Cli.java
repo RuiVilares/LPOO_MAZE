@@ -16,7 +16,7 @@ public class Cli {
 		if(gameMode == 1)
 			 maze = new Maze();
 		else
-			maze = new Maze(dragonMode(), dragonSpitFire(), dragonSize(), dartsSize());
+			maze = new Maze(size(),dragonMode(), dragonSpitFire(), dragonSize(), dartsSize());
 		
 		char cmd;
 		do {
@@ -36,6 +36,16 @@ public class Cli {
 		}
 	}
 	
+	public int size() {
+		int size;
+		do {
+			System.out.print("\n\nChoose a odd number to the size of the maze (from 11 to 31): \n\n" + "> ");
+			reader = new Scanner(System.in);
+			size = reader.nextInt();
+		} while (size < 11 || size > 32 || size%2 ==0 );
+		return size;
+	}
+
 	private int dartsSize() {
 		int optionD;
 		do {

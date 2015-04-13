@@ -18,6 +18,7 @@ public class GamePanel extends JPanel{
 	private JPanel statusPanel;
 	private JTextArea status;
 	public GamePanel(final Gui frame, Maze maze){
+
 		addKeyListener(new KeyListener(){
 		    public void keyPressed(KeyEvent e) {
 		    	boolean special;
@@ -71,6 +72,7 @@ public class GamePanel extends JPanel{
 
 			@Override
 			public void gameDone(GameEvent e) {
+				
 				if(e.getSource().equals("win"))
 					frame.end(true);
 				else
