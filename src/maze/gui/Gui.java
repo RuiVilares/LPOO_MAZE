@@ -3,7 +3,6 @@ package maze.gui;
 import java.awt.*;
 import java.awt.event.HierarchyBoundsListener;
 import java.awt.event.HierarchyEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
@@ -113,7 +112,6 @@ public class Gui extends JFrame{
 		try {
 		  is = new ObjectInputStream(new FileInputStream("settings.stgs"));
 		  keys = (Keys) is.readObject();
-		  System.out.print(KeyEvent.getKeyText(keys.getKeyUp()));
 		  is.close();
 		}
 		catch (IOException | ClassNotFoundException e) {
@@ -125,7 +123,6 @@ public class Gui extends JFrame{
 		ObjectOutputStream os = null;
 		try{
 			os = new ObjectOutputStream(new FileOutputStream("settings.stgs"));
-			System.out.print(KeyEvent.getKeyText(keys.getKeyUp()));
 			os.writeObject(keys);
 			os.close();
 		}

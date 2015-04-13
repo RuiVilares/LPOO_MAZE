@@ -14,6 +14,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import maze.logic.Maze;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 @SuppressWarnings("serial")
@@ -40,7 +42,6 @@ public class MainMenu extends JPanel {
 		    }
 
 		});
-		add(newGame);
 		loadGame.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
@@ -48,7 +49,6 @@ public class MainMenu extends JPanel {
 		    }
 
 		});
-		add(loadGame);
 		settings.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
@@ -56,7 +56,6 @@ public class MainMenu extends JPanel {
 		    }
 
 		});
-		add(settings);
 		exit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
@@ -65,7 +64,32 @@ public class MainMenu extends JPanel {
 		    }
 
 		});
-		add(exit);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(168)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(exit, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+						.addComponent(newGame, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+						.addComponent(settings, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(loadGame, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+					.addGap(153))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(84, Short.MAX_VALUE)
+					.addComponent(newGame)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(loadGame)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(settings)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(exit)
+					.addGap(82))
+		);
+		setLayout(groupLayout);
 	}
 	
 	@Override
