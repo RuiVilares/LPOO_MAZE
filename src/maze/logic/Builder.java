@@ -304,6 +304,13 @@ public class Builder {
 		} while (board.getCell(x, y) == 'X');
 		return dart;
 	}
+	/**
+	 * Function to know if the dragons can fall asleep.
+	 * 
+	 * 
+	 * @return Either true when the dragons can fall asleep or false otherwise. 
+	 * 			
+	 */
 	public boolean getSleep() {
 		if(dragonMode == Dragon.Behavior.Sleep){
 			return true;
@@ -312,6 +319,13 @@ public class Builder {
 			return false;
 		}
 	}
+	/**
+	 * Function to know if the dragons can move.
+	 * 
+	 * 
+	 * @return Either true when the dragons can move or false otherwise. 
+	 * 			
+	 */
 	public boolean canMove() {
 		if(dragonMode == Dragon.Behavior.Idle){
 			return false;

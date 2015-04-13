@@ -692,7 +692,12 @@ public class Maze implements Serializable{
 	public ArrayList<Dragon> getDragons(){
 		return dragons;
 	}
-	
+	/**
+	 * Checks if the maze is playable (useful for when the user creates the game).
+	 * 
+	 * @return Either true if it is playable or false otherwise.
+	 * 
+	 */
 	public boolean checkViability(){
 		if(dragons.size() == 0 || !board.isViable() || hero.getX() == -1 || !exit.isAtBorder(board.getSize()) || !exit.accesible(board) ||
 				sword.getX() == -1){
@@ -703,6 +708,12 @@ public class Maze implements Serializable{
 		}
 		return true;
 	}
+	/**
+	 * Get board size.
+	 * 
+	 * @return board size
+	 * 
+	 */
 	public int getSize(){
 		return board.getSize();
 	}

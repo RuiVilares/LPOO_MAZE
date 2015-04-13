@@ -159,7 +159,12 @@ public class Hero extends Piece {
 	public int getDarts(){
 		return this.nDarts;
 	}
-
+	/**
+	 * Checks if the hero needs protection
+	 * 
+	 * @return Either true if the condition verifies and false otherwise.
+	 * 
+	 */	
 	public boolean isProtectionNeed() {
 		return protectionNeed;
 	}

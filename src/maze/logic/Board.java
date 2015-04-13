@@ -209,6 +209,11 @@ public class Board implements Serializable{
 		return size;
 	}
 	
+	/**
+	 * Checks if the walls are well placed to play.
+	 * 
+	 * @return Returns true if the board is playable and false otherwise.
+	 */
 	public boolean isViable(){
 		for(int i = 0; i < board.length; i++){
 			for(int j = 0; j < board.length; j++){

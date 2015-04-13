@@ -22,10 +22,19 @@ public class Dragon extends Piece {
 	
 	public enum Behavior
     {
+        /**
+         * The dragons can't move
+         */
         Idle,
 
+        /**
+         * The dragons can move.
+         */
         Random,
 
+        /**
+         * The dragons moves and falls asleep.
+         */
         Sleep
     }
 	

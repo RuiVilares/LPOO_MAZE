@@ -37,7 +37,12 @@ public class Exit extends Piece {
 	public String toString(){
 		return ""+desc;
 	}
-	
+	/**
+	 * Checks if there is no wall near the door.
+	 * 
+	 * @return Either true if the hero can reach the door and false otherwise. 
+	 * 
+	 */
 	public boolean accesible(Board board) {
 		if(getX() == 0 && board.getCell(getX()+1,getY()) == 'X'){
 			return false;
@@ -54,7 +59,12 @@ public class Exit extends Piece {
 		else
 			return true;
 	}
-
+	/**
+	 * Checks if the door is on the border of the board.
+	 * 
+	 * @return Either true if the door is on the border of the board and false otherwise. 
+	 * 
+	 */
 	public boolean isAtBorder(int size) {
 		return (((getX() == 0 || getX() == size - 1) && getY() != 0 && getY() != size - 1) 
 				|| ((getY() == 0 || getY() == size -1)
