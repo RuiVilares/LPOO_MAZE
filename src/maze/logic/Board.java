@@ -6,11 +6,27 @@ import java.util.Stack;
 
 import data_structures.*;
 
+/**
+ * 
+ * Class to create a default or a random board.
+ * 
+ * @author Diogo Trindade
+ * @author Rui Vilares
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class Board implements Serializable{
+	/** Matrix with elements */
 	private char[][] board;
+	/** Size of the board */
 	private int size;
 
+	/**
+	 * Constructs and initializes a default board.
+	 * 
+	 */
+	
 	public Board() {
 		size = 10;
 		board = new char[][]{
@@ -26,10 +42,24 @@ public class Board implements Serializable{
 				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }};
 	}
 	
+	/**
+	 * Constructs and initializes a specific board.
+	 * 
+	 * @param array
+	 * 			the matrix with a specific board 
+	 */
+	
 	public Board(char [][] array){
 		size = array.length;
 		board = array;
 	}
+	
+	/**
+	 * Constructs and initializes a random board.
+	 * 
+	 * @param size
+	 * 			the size of the board(need be a odd number)
+	 */
 	
 	public Board(int size) {
 		this.size = size;
@@ -42,6 +72,9 @@ public class Board implements Serializable{
 		generateBoard();
 	}
 
+	/**
+	 * Function to construct a random board.
+	 */
 	private void generateBoard(){
 		int x,y;
 		Random r = new Random();
@@ -124,6 +157,18 @@ public class Board implements Serializable{
 		}
 
 	}
+	
+	/**
+	 * Auxiliary function to create a random board.
+	 * 
+	 * @param array
+	 * 			matrix with visited and unvisited positions
+	 * @param size
+	 * 			matrix size
+	 * @param p1
+	 * 			pair with X and Y positions 
+	 * @return true if p1 adjacent position equals to ".", false otherwise.
+	 */
 	private boolean checkOptions(char[][] array, int size, Pair p1){
 		if(p1.getX()+1 < size && array[p1.getY()][p1.getX()+1] == '.'){
 			return true;
@@ -140,10 +185,26 @@ public class Board implements Serializable{
 		return false;
 	}
 	
+	/**
+	 * Get char in a determined position.
+	 * 
+	 * @param x
+	 * 			X position
+	 * @param y
+	 * 			Y position
+	 * @return char contained in the given position.
+	 */
+	
 	public char getCell(int x, int y) {
 		return board[y][x];
 	}
 
+	/**
+	 * Get board size.
+	 * 
+	 * @return Integer value of the board size.
+	 */
+	
 	public int getSize() {
 		return size;
 	}
