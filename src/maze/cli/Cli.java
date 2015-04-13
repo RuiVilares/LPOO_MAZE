@@ -34,6 +34,7 @@ public class Cli {
 		} else {
 			printLoosingMessage();
 		}
+		new Cli();
 	}
 	
 	public int size() {
