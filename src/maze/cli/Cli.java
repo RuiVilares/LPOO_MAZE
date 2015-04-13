@@ -120,9 +120,17 @@ public class Cli {
 	}
 	public void printWinningMessage(){
 		System.out.println("\t\t\t\t YOU WIN !!!!!! \n \n \n \n \n \n \n \n \n");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+		}
 	}
 	public void printLoosingMessage(){
 		System.out.println("\t\t\t\t YOU LOSE !!!!!! \n \n \n \n \n \n \n \n \n");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+		}
 	}
 	public void clearSrc(){
 		for(int i = 0; i < 50; i++){
