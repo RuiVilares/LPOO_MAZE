@@ -114,7 +114,7 @@ public class MainMenu extends JPanel {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Game Files (*.game)", "game");
 		fileChooser.setFileFilter(filter);
-		fileChooser.showOpenDialog(getParent());
+		fileChooser.showOpenDialog(null);
 		Maze maze = null;
 		ObjectInputStream is = null;
 		try {

@@ -130,7 +130,7 @@ public class MazePanel extends JPanel{
 		FileNameExtensionFilter gameFilter = new FileNameExtensionFilter("Game Files (*.game)", "game");
 		fileChooser.addChoosableFileFilter(gameFilter);
 		fileChooser.setFileFilter(gameFilter);
-		fileChooser.showSaveDialog(getParent());
+		fileChooser.showSaveDialog(null);
 		ObjectOutputStream os = null;
 		try{
 			if(fileChooser.getSelectedFile() != null){
