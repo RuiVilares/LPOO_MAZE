@@ -17,10 +17,10 @@ import java.util.Random;
 public class Dragon extends Piece {
 
 	/**
-	 * Represents a Dragon behaviour
+	 * Represents a Dragon behavior
 	 */
 	
-	public enum Behaviour
+	public enum Behavior
     {
         Idle,
 
@@ -35,11 +35,11 @@ public class Dragon extends Piece {
 	/** Dragon is sleeping now? */
 	private boolean sleeping;
 	
-	/** Sleep countdown. */
+	/** Sleep count down. */
 	private int sleepTime;
 	
-	/** The behaviour. */
-	private final Behaviour mode;
+	/** The behavior. */
+	private final Behavior mode;
 	
 	
 	/**
@@ -56,7 +56,7 @@ public class Dragon extends Piece {
 	 * 
 	 */
 	
-	public Dragon(int x, int y, Behaviour mode, boolean spitFire) {
+	public Dragon(int x, int y, Behavior mode, boolean spitFire) {
 		super(x, y);
 	
 		this.sleeping = false;
@@ -97,7 +97,7 @@ public class Dragon extends Piece {
 	 */
 	
 	public boolean canMove() {
-		if (mode == Behaviour.Idle || sleeping)
+		if (mode == Behavior.Idle || sleeping)
 			return false;
 		else
 			return true;
@@ -112,7 +112,7 @@ public class Dragon extends Piece {
 	
 	public boolean canSleep()
     {
-        if (mode != Behaviour.Sleep)
+        if (mode != Behavior.Sleep)
             return false;
         else
         	return true;

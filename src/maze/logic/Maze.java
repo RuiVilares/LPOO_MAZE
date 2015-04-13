@@ -47,7 +47,7 @@ public class Maze implements Serializable{
 	private boolean move;
 	
 	/**
-	 * Constructs and initializes a null maze.
+	 * Constructs and initializes a classic maze.
 	 */
 	
 	public Maze(){
@@ -96,19 +96,19 @@ public class Maze implements Serializable{
 	    }
 		
 		spitsFire = true;
-		Dragon.Behaviour behavior = Dragon.Behaviour.Idle;
+		Dragon.Behavior behavior = Dragon.Behavior.Idle;
 		
 		if(dragonSpitFire == 2){
 			spitsFire = false;
 		}
 		
 		if(dragonMode == 2){
-			behavior = Dragon.Behaviour.Random;
+			behavior = Dragon.Behavior.Random;
 			sleep = false;
 			move = true;
 		}
 		else if(dragonMode == 3){
-			behavior = Dragon.Behaviour.Sleep;
+			behavior = Dragon.Behavior.Sleep;
 			sleep = true;
 			move = true;
 		}
@@ -153,23 +153,21 @@ public class Maze implements Serializable{
 		}
 		totalDragons = dragons.size();
 	}
-
-<<<<<<< HEAD
-	public Maze(int size, int dragonMode, int dragonSpitFire, int nDragons, int nDarts) {
-=======
 	/**
 	 * Constructs and initializes maze with several dragons.
 	 * 
+	 * @param size
+	 * 			Board size
 	 * @param dragonMode
 	 * 			Dragon mode (idle, move, sleep)
 	 * @param dragonSpitFire
 	 * 			Spit Fire mode active or not
 	 * @param nDragons
-	 * 			number of dragons that we pretend
+	 * 			number of dragons to create
+	 * @param nDarts
+	 * 			number of darts to create
 	 */
-	
-	public Maze(int dragonMode, int dragonSpitFire, int nDragons) {
->>>>>>> origin/Vilares
+	public Maze(int size, int dragonMode, int dragonSpitFire, int nDragons, int nDarts) {
 		done = false;
 		
 		dragons = new ArrayList<Dragon>();
@@ -256,7 +254,13 @@ public class Maze implements Serializable{
 		return maze;
 	}
 
-<<<<<<< HEAD
+
+	/**
+	 * Draws game state to String.
+	 * 
+	 * @return String with actual game state
+	 * 
+	 */	
 	public String statusToString() {
 		String def = "Armed: " + hero.isArmed() + " \nShield: "
 				+ hero.isProtection() + " \nNumber of Darts: " + hero.getDarts()
@@ -264,23 +268,6 @@ public class Maze implements Serializable{
 				+ " \nSpits Fire: " + spitsFire
 				+ " \nCan Sleep: " + sleep + " \nCan Move: "
 				+ move + "\n";
-=======
-	/**
-	 * Draws game state to String.
-	 * 
-	 * @return String with actual game state
-	 * 
-	 */	
-	
-	public String stateToString() {
-		String def = "Armed: " + hero.isArmed() + "  Shield: "
-				+ hero.isProtection() + "  Number of Darts: " + hero.getDarts()
-				+ "\n" + "Dragons: " + dragons.size() + "/" + dragons.size()
-				+ "  SpitFire: " + dragons.get(0).spitsFire()
-				+ "  CanSleep: " + dragons.get(0).canSleep() + "  CanMove: "
-				+ dragons.get(0).canMove() + "  Sleeping: "
-				+ dragons.get(0).isSleeping() + "\n";
->>>>>>> origin/Vilares
 		return def;
 	}
 
