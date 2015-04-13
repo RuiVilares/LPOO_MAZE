@@ -129,7 +129,7 @@ public class SimpleTests {
     	String compare = ""+maze;
     	String expected =
     			"XXXXXXXXXX\n"+
-    			"XQ       X\n"+
+    			"XH       X\n"+
     			"X XX X X X\n"+
     			"XDXX X X X\n"+
     			"X XX X X X\n"+

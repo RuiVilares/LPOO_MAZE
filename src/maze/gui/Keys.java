@@ -1,11 +1,6 @@
 package maze.gui;
 
 import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -67,36 +62,6 @@ public class Keys implements Serializable{
 	public void setSpecialKey(int specialKey) {
 		if(specialKey == KeyEvent.VK_ALT || specialKey == KeyEvent.VK_CONTROL)
 			this.specialKey = specialKey;
-	}
-	
-	public void saveKeys(){
-		ObjectOutputStream os = null;
-		try{
-			os = new ObjectOutputStream(new FileOutputStream("settings.stgs"));
-			os.writeInt(keyUp);
-			os.writeInt(keyDown);
-			os.writeInt(keyLeft);
-			os.writeInt(keyRight);
-			os.writeInt(specialKey);
-			os.close();
-		}
-		catch(IOException e){
-		}
-	}
-	public void loadKeys(){
-		ObjectInputStream is = null;
-		try {
-		  is = new ObjectInputStream(new FileInputStream("settings.stgs"));
-		  setKeyUp(is.readInt());
-		  setKeyDown(is.readInt());
-		  setKeyLeft(is.readInt());
-		  setKeyRight(is.readInt());
-		  setSpecialKey(is.readInt());
-		  is.close();
-		}
-		catch (IOException e) {
-			
-		}
 	}
 	
 	

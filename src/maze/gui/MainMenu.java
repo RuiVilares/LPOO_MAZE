@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import maze.logic.Maze;
 
@@ -31,6 +32,7 @@ public class MainMenu extends JPanel {
 		} catch (IOException e1) {
 			
 		}
+		
 		newGame.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
@@ -58,6 +60,7 @@ public class MainMenu extends JPanel {
 		exit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
+				frame.saveKeys();
 				System.exit(0);
 		    }
 
@@ -72,6 +75,8 @@ public class MainMenu extends JPanel {
 	}
 	private void loadGame(){
 		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Game Files (*.game)", "game");
+		fileChooser.setFileFilter(filter);
 		fileChooser.showOpenDialog(getParent());
 		Maze maze = null;
 		ObjectInputStream is = null;

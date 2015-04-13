@@ -21,7 +21,7 @@ public class Cli {
 		char cmd;
 		do {
 			clearSrc();
-			printString(maze.stateToString());
+			printString(maze.statusToString());
 			printString(maze + "");
 			cmd = readChar();
 			maze.update(cmd);

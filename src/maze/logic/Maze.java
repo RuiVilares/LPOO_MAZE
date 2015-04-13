@@ -16,6 +16,9 @@ public class Maze implements Serializable{
 	private Sword sword;
 	private Shield shield;
 	private int totalDragons;
+	private boolean spitsFire;
+	private boolean sleep;
+	private boolean move;
 	
 	public Maze(){
 		done = false;
@@ -34,6 +37,9 @@ public class Maze implements Serializable{
 		shield = null;
 		hero.noProtectionNeeded();
 		totalDragons = dragons.size();
+		spitsFire = builder.getDragonSpitFire();
+		sleep = builder.getSleep();
+		move = builder.canMove();
 	}
 	
 	public Maze(int dragonMode, int dragonSpitFire, char [][] array){
@@ -48,7 +54,7 @@ public class Maze implements Serializable{
 	        System.arraycopy(array[i], 0, maze[i], 0, array[i].length);
 	    }
 		
-		boolean spitsFire = true;
+		spitsFire = true;
 		Dragon.Behaviour behavior = Dragon.Behaviour.Idle;
 		
 		if(dragonSpitFire == 2){
@@ -57,9 +63,13 @@ public class Maze implements Serializable{
 		
 		if(dragonMode == 2){
 			behavior = Dragon.Behaviour.Random;
+			sleep = false;
+			move = true;
 		}
 		else if(dragonMode == 3){
 			behavior = Dragon.Behaviour.Sleep;
+			sleep = true;
+			move = true;
 		}
 		
 		dragons = new ArrayList<Dragon>();
@@ -125,12 +135,15 @@ public class Maze implements Serializable{
 			nDragons--;
 		} while (nDragons > 0);
 		
-		do {
+		while (nDarts > 0){
 			darts.add(builder.createDart());
 			nDarts--;
-		} while (nDarts > 0);
+		};
 		
 		totalDragons = dragons.size();
+		spitsFire = builder.getDragonSpitFire();
+		sleep = builder.getSleep();
+		move = builder.canMove();
 	}
 
 	public String toString() {
@@ -180,13 +193,13 @@ public class Maze implements Serializable{
 		return maze;
 	}
 
-	public String stateToString() {
+	public String statusToString() {
 		String def = "Armed: " + hero.isArmed() + " \nShield: "
 				+ hero.isProtection() + " \nNumber of Darts: " + hero.getDarts()
 				+ " \n" + "Dragons: " + dragons.size() + "/" + totalDragons
-				+ " \nSpitFire: " + builder.getDragonSpitFire()
-				+ " \nCanSleep: " + builder.getSleep() + " \nCanMove: "
-				+ builder.canMove() + "\n";
+				+ " \nSpits Fire: " + spitsFire
+				+ " \nCan Sleep: " + sleep + " \nCan Move: "
+				+ move + "\n";
 		return def;
 	}
 

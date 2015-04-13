@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import maze.logic.Maze;
 
@@ -125,10 +126,17 @@ public class MazePanel extends JPanel{
 	}
 	public void saveGameStatus() {
 		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter gameFilter = new FileNameExtensionFilter("Game Files (*.game)", "game");
+		fileChooser.addChoosableFileFilter(gameFilter);
+		fileChooser.setFileFilter(gameFilter);
 		fileChooser.showSaveDialog(getParent());
 		ObjectOutputStream os = null;
 		try{
-			os = new ObjectOutputStream(new FileOutputStream(fileChooser.getSelectedFile() + ".dat"));
+			String file = fileChooser.getSelectedFile()+"";
+			if(!file.endsWith(".game")){
+				file += ".game";
+			}
+			os = new ObjectOutputStream(new FileOutputStream(file));
 			os.writeObject(maze);
 			os.close();
 		}

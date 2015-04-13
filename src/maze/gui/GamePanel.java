@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 @SuppressWarnings("serial")
@@ -52,7 +54,7 @@ public class GamePanel extends JPanel{
 		    		else
 		    			mazePanel.updateMaze('j');
 		    	}
-		    	status.setText(mazePanel.getMaze().stateToString());
+		    	status.setText(mazePanel.getMaze().statusToString());
 		    	
 		    }
 
@@ -122,15 +124,31 @@ public class GamePanel extends JPanel{
 			}
 		});
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.add(mainMenu);
-		buttonsPanel.add(newGame);
-		buttonsPanel.add(saveGame);
-		buttonsPanel.add(definitions);
 		buttonsPanel.setBackground(Color.BLACK);
-		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
 		statusPanel.add(buttonsPanel, BorderLayout.NORTH);
+		GroupLayout gl_buttonsPanel = new GroupLayout(buttonsPanel);
+		gl_buttonsPanel.setHorizontalGroup(
+			gl_buttonsPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(mainMenu)
+				.addComponent(newGame, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+				.addComponent(saveGame, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+				.addComponent(definitions, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+		);
+		gl_buttonsPanel.setVerticalGroup(
+			gl_buttonsPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_buttonsPanel.createSequentialGroup()
+					.addComponent(mainMenu)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(newGame)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(saveGame)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(definitions)
+					.addContainerGap())
+		);
+		buttonsPanel.setLayout(gl_buttonsPanel);
 		
-		status = new JTextArea(mazePanel.getMaze().stateToString());
+		status = new JTextArea(mazePanel.getMaze().statusToString());
 		status.setForeground(Color.WHITE);
 		status.setBackground(Color.BLACK);
 		status.setEditable(false);

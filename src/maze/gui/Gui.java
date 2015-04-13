@@ -1,8 +1,16 @@
 package maze.gui;
 
 import java.awt.*;
+import java.awt.event.HierarchyBoundsListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.*;
 
@@ -15,22 +23,32 @@ public class Gui extends JFrame{
 	private static Keys keys;
 	
 	public Gui(){
-		setPreferredSize(new Dimension(600, 500));
 		panel = null;
 		
 		setLocationRelativeTo(null);
 		setTitle("Labirinto");
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setResizable(true);
 	    addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
-	            getKeys().saveKeys();
+	            saveKeys();
 	        }
 	    });
-	    setResizable(true);
+	    setSize(600, 500);
+	    getContentPane().addHierarchyBoundsListener(new HierarchyBoundsListener(){
+	    	 
+            @Override
+            public void ancestorMoved(HierarchyEvent e) {           
+            }
+            @Override
+            public void ancestorResized(HierarchyEvent e) {
+            	setPreferredSize(new Dimension(getWidth(), getHeight()));
+                 
+            }     
+        });
 	    setVisible(true);
 	    
-	    keys = new Keys();
-	    keys.loadKeys();
+	    loadKeys();
 	    mainMenu();
 	}
 	
@@ -90,8 +108,29 @@ public class Gui extends JFrame{
 		return keys;
 	}
 
-	public static void setKeys(Keys keys) {
-		Gui.keys = keys;
+	public void loadKeys(){
+		ObjectInputStream is = null;
+		try {
+		  is = new ObjectInputStream(new FileInputStream("settings.stgs"));
+		  keys = (Keys) is.readObject();
+		  System.out.print(KeyEvent.getKeyText(keys.getKeyUp()));
+		  is.close();
+		}
+		catch (IOException | ClassNotFoundException e) {
+			keys =  new Keys();
+		}
+		
+	}
+	public void saveKeys(){
+		ObjectOutputStream os = null;
+		try{
+			os = new ObjectOutputStream(new FileOutputStream("settings.stgs"));
+			System.out.print(KeyEvent.getKeyText(keys.getKeyUp()));
+			os.writeObject(keys);
+			os.close();
+		}
+		catch(IOException e){
+		}
 	}
 
 	
