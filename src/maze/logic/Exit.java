@@ -38,9 +38,13 @@ public class Exit extends Piece {
 		return ""+desc;
 	}
 	/**
-	 * Checks if there is no wall near the door.
+	 * Checks if the door is on the border of the board.
 	 * 
-	 * @return Either true if the hero can reach the door and false otherwise. 
+	 * @param board
+	 * 			Board of the maze
+	 * 
+	 * 
+	 * @return Either true if the door is on the border of the board and false otherwise. 
 	 * 
 	 */
 	public boolean accesible(Board board) {

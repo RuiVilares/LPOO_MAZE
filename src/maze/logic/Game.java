@@ -15,9 +15,14 @@ public class Game {
 	
 	/**
 	 * Main function.
+	 * 
+	 * @param args
+	 * 			Normal main function
+	 * 
 	 */
 	
 	public static void main(String[] args) {
+		
 		new Gui();
 	}
 }

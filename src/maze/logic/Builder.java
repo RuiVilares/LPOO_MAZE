@@ -53,6 +53,13 @@ public class Builder {
 	/**
 	 * Constructs and initializes a builder for random mode.
 	 * 
+	 * @param optionD
+	 * 			Dragon behavior
+	 * @param optionS
+	 * 			Spit Fire mode
+	 * @param size
+	 * 			Maze size 
+	 *
 	 */
 	public Builder(int optionD, int optionS, int size) {
 		this.random = true;
