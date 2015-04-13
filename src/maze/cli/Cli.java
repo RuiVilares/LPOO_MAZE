@@ -6,21 +6,21 @@ import maze.logic.Maze;
 
 public class Cli {
 	private Scanner reader;
-	
+
 	public Cli(){
 		Maze maze = null;
 		reader = new Scanner(System.in);
 		clearSrc();
-		
+
 		int gameMode = gameMode();
 		if(gameMode == 1)
-			 maze = new Maze();
+			maze = new Maze();
 		else if(gameMode == 3){
 			System.exit(0);
 		}
 		else
 			maze = new Maze(size(),dragonMode(), dragonSpitFire(), dragonSize(), dartsSize());
-		
+
 		char cmd;
 		do {
 			clearSrc();
@@ -30,7 +30,7 @@ public class Cli {
 			maze.update(cmd);
 
 		} while (!maze.isDone());	
-		
+
 		clearSrc();
 		if (!maze.getHero().isDead()) {
 			printWinningMessage();
@@ -39,7 +39,7 @@ public class Cli {
 		}
 		new Cli();
 	}
-	
+
 	public int size() {
 		int size;
 		do {
@@ -55,7 +55,12 @@ public class Cli {
 		do {
 			System.out.print("\n\nChoose numbre of darts: \n\n" + "> ");
 			reader = new Scanner(System.in);
-			optionD = reader.nextInt();
+			try{
+				optionD = reader.nextInt();
+			}
+			catch(Exception e){
+				optionD = 100;
+			}
 		} while (optionD < 1 || optionD > 5);
 		return optionD;
 	}
@@ -63,49 +68,70 @@ public class Cli {
 	public int gameMode(){
 		int optionG;
 		do{
-		System.out.print("Choose game mode: \n\n"
-				+ "1. Classic Maze\n"
-				+ "2. Random Maze\n"
-				+ "3. Quit\n\n"
-				+ "> ");
-		reader = new Scanner(System.in);
-		optionG = reader.nextInt();
+			System.out.print("Choose game mode: \n\n"
+					+ "1. Classic Maze\n"
+					+ "2. Random Maze\n"
+					+ "3. Quit\n\n"
+					+ "> ");
+			reader = new Scanner(System.in);
+			try{
+				optionG = reader.nextInt();
+			}
+			catch(Exception e){
+				optionG = 100;
+			}
 		} while (optionG < 1 || optionG > 3);
 		return optionG;
 	}
-	
+
 	public int dragonMode(){
 		int optionD;
 		do {
 			System.out.print("\n\nChoose dragon mode: \n\n" + "1. Igle\n"
 					+ "2. Random Moviment\n" + "3. Sleeping dragon\n\n" + "> ");
 			reader = new Scanner(System.in);
-			optionD = reader.nextInt();
+			try{
+				optionD = reader.nextInt();
+			}
+			catch(Exception e){
+				optionD = 100;
+			}
 		} while (optionD < 1 || optionD > 3);
 		return optionD;
 	}
-	
+
 	public int dragonSpitFire(){
 		int option;
 		do {
 			System.out.print("\n\nCan the dragon spit fire: \n\n" + "1. Yes\n"
 					+ "2. No\n\n" + "> ");
 			reader = new Scanner(System.in);
-			option = reader.nextInt();
+			try{
+				option = reader.nextInt();
+			}
+			catch(Exception e){
+				option = 100;
+			}
 		} while (option < 1 || option > 2);
 		return option;
 	}
-	
+
 	public int dragonSize(){
 		int optionD;
 		do {
 			System.out.print("\n\nChoose numbre of dragons: \n\n" + "> ");
 			reader = new Scanner(System.in);
-			optionD = reader.nextInt();
+			try{
+				optionD = reader.nextInt();
+			}
+			catch(Exception e){
+				optionD = 100;
+			}
+
 		} while (optionD < 1 || optionD > 5);
 		return optionD;
 	}
-	
+
 	public char readChar(){
 		char read;
 		System.out.print("> ");

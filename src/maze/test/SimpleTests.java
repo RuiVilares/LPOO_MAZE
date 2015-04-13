@@ -151,5 +151,26 @@ public class SimpleTests {
     	assertTrue(maze.getDragons().get(0).canMove());
     	maze.update('a');
     }
+    @Test
+    public void DartsTest()
+    {
+        char[][] board = new char[][]{
+                                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
+                                { 'X', 'H', '/', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', 'D', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'S' },
+                                { 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', 'S', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X' },
+                                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }};
+        Maze maze = new Maze(1, 1, board);
+        maze.update('d');
+        maze.update('a');
+        maze.update('k');
+        assertEquals(maze.getDragons().size(), 0);
+        assertFalse(maze.checkViability());
+    }
 	
 }
