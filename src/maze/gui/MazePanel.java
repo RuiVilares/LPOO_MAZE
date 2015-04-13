@@ -19,18 +19,7 @@ import maze.logic.Maze;
 @SuppressWarnings("serial")
 public class MazePanel extends JPanel{
 	
-	private static BufferedImage wall;
-	private static BufferedImage door;
-	private static BufferedImage grass;
-	private static BufferedImage hero;
-	private static BufferedImage dragon;
-	private static BufferedImage sword;
-	private static BufferedImage armedHero;
-	private static BufferedImage sleepingDragon;
-	private static BufferedImage darts;
-	private static BufferedImage shield;
-	private static BufferedImage heroShield;
-	private static BufferedImage heroFullyArmed;
+	private static BufferedImage sprite;
 	private Maze maze;
 	private GameListener listener;
 	
@@ -40,18 +29,7 @@ public class MazePanel extends JPanel{
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		try{
-			wall = ImageIO.read(new File("res/Box.jpg"));
-			door = ImageIO.read(new File("res/Door.jpg"));
-			grass = ImageIO.read(new File("res/Grass.jpg"));
-			hero = ImageIO.read(new File("res/Hero.jpg"));
-			dragon  = ImageIO.read(new File("res/Dragon.jpg"));
-			sword = ImageIO.read(new File("res/Sword.jpg"));
-			armedHero = ImageIO.read(new File("res/HeroSword.jpg"));
-			sleepingDragon = ImageIO.read(new File("res/DragonSleep.jpg"));
-			darts = ImageIO.read(new File("res/Darts.jpg"));
-			shield = ImageIO.read(new File("res/Shield.jpg"));
-			heroShield = ImageIO.read(new File("res/HeroShield.jpg"));
-			heroFullyArmed = ImageIO.read(new File("res/HeroShieldSword.jpg"));
+			sprite = ImageIO.read(new File("res/Sprite.jpg"));
 			
 		}
 		catch(IOException e){
@@ -84,43 +62,45 @@ public class MazePanel extends JPanel{
 		int x2 = width/size;
 		int y1 = 0;
 		int y2 = height/size;
+		int imageHeight = sprite.getHeight();
+		int imageWidth = sprite.getWidth();
 		for(int i = 0; i < mazeString.length(); i++){
 			switch(mazeString.charAt(i)){
 			case 'X':
-				g.drawImage(wall, x1, y1, x2, y2, 0, 0, wall.getWidth(), wall.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, 0, imageHeight/2, imageWidth/6, imageHeight, null);
 				break;
 			case ' ':
-				g.drawImage(grass, x1, y1, x2, y2, 0, 0, grass.getWidth(), grass.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, 5*imageWidth/6, imageHeight/2, imageWidth, imageHeight, null);
 				break;
 			case 'H':
-				g.drawImage(hero, x1, y1, x2, y2, 0, 0, hero.getWidth(), hero.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, 0, 0, imageWidth/6, imageHeight/2, null);
 				break;
 			case 'D':
-				g.drawImage(dragon, x1, y1, x2, y2, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/2, imageHeight/2, 2*imageWidth/3, imageHeight, null);
 				break;
 			case 'E':
-				g.drawImage(sword, x1, y1, x2, y2, 0, 0, sword.getWidth(), sword.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, 5*imageWidth/6, 0, imageWidth, imageHeight/2, null);
 				break;
 			case 'S':
-				g.drawImage(door, x1, y1, x2, y2, 0, 0, door.getWidth(), door.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/6, imageHeight/2, imageWidth/3, imageHeight, null);
 				break;
 			case 'A':
-				g.drawImage(armedHero, x1, y1, x2, y2, 0, 0, armedHero.getWidth(), armedHero.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/2, 0, 2*imageWidth/3, imageHeight/2, null);
 				break;
 			case 'd':
-				g.drawImage(sleepingDragon, x1, y1, x2, y2, 0, 0, sleepingDragon.getWidth(), sleepingDragon.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/3, imageHeight/2, imageWidth/2, imageHeight, null);
 				break;
 			case 'O':
-				g.drawImage(shield, x1, y1, x2, y2, 0, 0, shield.getWidth(), shield.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, 2*imageWidth/3, 0, 5*imageWidth/6, imageHeight/2, null);
 				break;
 			case '/':
-				g.drawImage(darts, x1, y1, x2, y2, 0, 0, darts.getWidth(), darts.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, 2*imageWidth/3, imageHeight/2, 5*imageWidth/6, imageHeight, null);
 				break;
 			case 'U':
-				g.drawImage(heroFullyArmed, x1, y1, x2, y2, 0, 0, heroFullyArmed.getWidth(), heroFullyArmed.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/3, 0, imageWidth/2, imageHeight/2, null);
 				break;
 			case 'Q':
-				g.drawImage(heroShield, x1, y1, x2, y2, 0, 0, heroShield.getWidth(), heroShield.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/6, imageHeight, imageWidth/3, imageHeight/2, null);
 				break;
 			case '\n':
 				x1 = 0;
@@ -129,7 +109,7 @@ public class MazePanel extends JPanel{
 				y2 += height/size;
 				break;
 			default:
-				g.drawImage(dragon, x1, y1, x2, y2, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+				g.drawImage(sprite, x1, y1, x2, y2, imageWidth/2, imageHeight/2, 2*imageWidth/3, imageHeight, null);
 				break;
 			}
 			if(mazeString.charAt(i) != '\n'){

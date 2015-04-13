@@ -25,8 +25,8 @@ public class EndPane extends JPanel {
 		this.winner = winner;
 		setLayout(new BorderLayout());
 		try{
-			win = ImageIO.read(new File("res/win.gif"));
-			lose = ImageIO.read(new File("res/loose.png"));
+			win = ImageIO.read(new File("res/Win.jpg"));
+			lose = ImageIO.read(new File("res/Lose.jpg"));
 		}
 		catch(IOException e){
 			JOptionPane.showMessageDialog(this, e.getMessage());

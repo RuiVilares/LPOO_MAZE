@@ -1,6 +1,8 @@
 package maze.gui;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
@@ -15,12 +17,20 @@ public class Gui extends JFrame{
 	public Gui(){
 		setPreferredSize(new Dimension(600, 500));
 		panel = null;
-		keys = new Keys();
+		
 		setLocationRelativeTo(null);
 		setTitle("Labirinto");
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    addWindowListener(new WindowAdapter() {
+	        public void windowClosing(WindowEvent e) {
+	            getKeys().saveKeys();
+	        }
+	    });
 	    setResizable(true);
 	    setVisible(true);
+	    
+	    keys = new Keys();
+	    keys.loadKeys();
 	    mainMenu();
 	}
 	
@@ -73,11 +83,15 @@ public class Gui extends JFrame{
 	}
 	
 	public void settings(){
-		new SettingsDialog(keys);
+		new SettingsDialog(getKeys());
 	}
 
 	public static Keys getKeys() {
 		return keys;
+	}
+
+	public static void setKeys(Keys keys) {
+		Gui.keys = keys;
 	}
 
 	

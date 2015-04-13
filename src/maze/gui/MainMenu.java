@@ -1,11 +1,15 @@
 package maze.gui;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import maze.logic.Maze;
@@ -14,6 +18,7 @@ import maze.logic.Maze;
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
 	private Gui frame;
+	private BufferedImage backGround; 
 	private static final JButton loadGame = new JButton("Carregar Jogo");
 	private static final JButton newGame = new JButton("Novo Jogo");
 	private static final JButton settings = new JButton("Definicoes");
@@ -21,6 +26,11 @@ public class MainMenu extends JPanel {
 	
 	public MainMenu(final Gui frame){
 		this.frame = frame;
+		try {
+			backGround = ImageIO.read(new File("res/Main.jpg"));
+		} catch (IOException e1) {
+			
+		}
 		newGame.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
@@ -54,20 +64,31 @@ public class MainMenu extends JPanel {
 		});
 		add(exit);
 	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(backGround, 0, 0, getWidth(), getHeight(), 0, 0, backGround.getWidth(), backGround.getHeight(), null);
+	}
 	private void loadGame(){
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showOpenDialog(getParent());
 		Maze maze = null;
 		ObjectInputStream is = null;
 		try {
-		  is = new ObjectInputStream(new FileInputStream(fileChooser.getSelectedFile()));
-		  maze = (Maze) is.readObject();
-		  is.close();
+			File file = fileChooser.getSelectedFile();
+			if(file != null){
+				is = new ObjectInputStream(new FileInputStream(file));
+				maze = (Maze) is.readObject();
+				is.close();
+			}
 		}
 		catch (IOException | ClassNotFoundException e) {
 			JOptionPane.showMessageDialog(frame,"ERROR");
 		}
-		frame.maze(maze);
+		if(maze != null){
+			frame.maze(maze);
+		}
 		
 	}
 }

@@ -32,7 +32,7 @@ public class Definitions extends JPanel{
 		this.frame = frame;
 		
 		setLayout(new GridLayout(6,2));
-		setBackground(Color.GRAY);
+		setBackground(Color.WHITE);
 		
 		String[] modes = { "Classic Mode", "Random Mode", "Custom Mode"};
 		String[] fire = { "Yes", "No"};

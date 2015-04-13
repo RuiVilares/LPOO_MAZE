@@ -84,10 +84,19 @@ public class GamePanel extends JPanel{
 		statusPanel.setLayout(new BorderLayout());
 		statusPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		statusPanel.setBackground(Color.BLACK);
+		JButton mainMenu = new JButton("Menu Principal");
 		JButton newGame = new JButton("Novo Jogo");
 		JButton saveGame = new JButton("Gravar Jogo");
 		JButton definitions = new JButton("Definicoes");
 		
+		
+		mainMenu.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.mainMenu();
+			}
+		});
 		newGame.addActionListener(new ActionListener(){
 
 			@Override
@@ -111,6 +120,7 @@ public class GamePanel extends JPanel{
 			}
 		});
 		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.add(mainMenu);
 		buttonsPanel.add(newGame);
 		buttonsPanel.add(saveGame);
 		buttonsPanel.add(definitions);

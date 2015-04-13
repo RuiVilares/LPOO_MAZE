@@ -1,15 +1,23 @@
 package maze.gui;
 
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Keys {
-	private int keyUp = KeyEvent.VK_UP;
+@SuppressWarnings("serial")
+public class Keys implements Serializable{
+	private int keyUp;
 	private int keyDown;
 	private int keyLeft;
 	private int keyRight;
 	private int specialKey;
 	
 	public Keys(){
+		keyUp = KeyEvent.VK_UP;
 		keyDown = KeyEvent.VK_DOWN;
 		keyLeft = KeyEvent.VK_LEFT;
 		keyRight = KeyEvent.VK_RIGHT;
@@ -61,12 +69,36 @@ public class Keys {
 			this.specialKey = specialKey;
 	}
 	
-	public void loadKeys(String path){
-		
+	public void saveKeys(){
+		ObjectOutputStream os = null;
+		try{
+			os = new ObjectOutputStream(new FileOutputStream("settings.stgs"));
+			os.writeInt(keyUp);
+			os.writeInt(keyDown);
+			os.writeInt(keyLeft);
+			os.writeInt(keyRight);
+			os.writeInt(specialKey);
+			os.close();
+		}
+		catch(IOException e){
+		}
 	}
-	public void saveKeys(String path){
-		
+	public void loadKeys(){
+		ObjectInputStream is = null;
+		try {
+		  is = new ObjectInputStream(new FileInputStream("settings.stgs"));
+		  setKeyUp(is.readInt());
+		  setKeyDown(is.readInt());
+		  setKeyLeft(is.readInt());
+		  setKeyRight(is.readInt());
+		  setSpecialKey(is.readInt());
+		  is.close();
+		}
+		catch (IOException e) {
+			
+		}
 	}
+	
 	
 
 }
