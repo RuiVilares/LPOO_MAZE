@@ -2,19 +2,23 @@ package maze.cli;
 
 import java.util.Scanner;
 
+import maze.gui.Gui;
 import maze.logic.Maze;
 
 public class Cli {
 	private Scanner reader;
 	
 	public Cli(){
-		Maze maze;
+		Maze maze = null;
 		reader = new Scanner(System.in);
 		clearSrc();
 		
 		int gameMode = gameMode();
 		if(gameMode == 1)
 			 maze = new Maze();
+		else if(gameMode == 3){
+			System.exit(0);
+		}
 		else
 			maze = new Maze(size(),dragonMode(), dragonSpitFire(), dragonSize(), dartsSize());
 		
@@ -62,11 +66,12 @@ public class Cli {
 		do{
 		System.out.print("Choose game mode: \n\n"
 				+ "1. Classic Maze\n"
-				+ "2. Random Maze\n\n"
+				+ "2. Random Maze\n"
+				+ "3. Quit\n\n"
 				+ "> ");
 		reader = new Scanner(System.in);
 		optionG = reader.nextInt();
-		} while (optionG < 1 || optionG > 2);
+		} while (optionG < 1 || optionG > 3);
 		return optionG;
 	}
 	
