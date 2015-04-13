@@ -132,13 +132,15 @@ public class MazePanel extends JPanel{
 		fileChooser.showSaveDialog(getParent());
 		ObjectOutputStream os = null;
 		try{
-			String file = fileChooser.getSelectedFile()+"";
-			if(!file.endsWith(".game")){
-				file += ".game";
+			if(fileChooser.getSelectedFile() != null){
+				String file = fileChooser.getSelectedFile()+"";
+				if(!file.endsWith(".game")){
+					file += ".game";
+				}
+				os = new ObjectOutputStream(new FileOutputStream(file));
+				os.writeObject(maze);
+				os.close();
 			}
-			os = new ObjectOutputStream(new FileOutputStream(file));
-			os.writeObject(maze);
-			os.close();
 		}
 		catch(IOException e){
 		}
