@@ -2,7 +2,6 @@ package maze.cli;
 
 import java.util.Scanner;
 
-import maze.gui.Gui;
 import maze.logic.Maze;
 
 public class Cli {

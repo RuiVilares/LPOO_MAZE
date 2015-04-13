@@ -151,7 +151,7 @@ public class MazeCustomPanel extends JPanel {
 				if(mazePanel.getMaze().checkViability())
 					frame.maze(mazePanel.getMaze());
 				else
-					JOptionPane.showMessageDialog(frame, "This maze is not playable");
+					JOptionPane.showMessageDialog(frame, "Este labirinto nao e jogavel!");
 			}
 			
 		});

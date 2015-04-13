@@ -129,7 +129,7 @@ public class GamePanel extends JPanel{
 		GroupLayout gl_buttonsPanel = new GroupLayout(buttonsPanel);
 		gl_buttonsPanel.setHorizontalGroup(
 			gl_buttonsPanel.createParallelGroup(Alignment.LEADING)
-				.addComponent(mainMenu)
+				.addComponent(mainMenu,GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
 				.addComponent(newGame, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
 				.addComponent(saveGame, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
 				.addComponent(definitions, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
@@ -137,6 +137,7 @@ public class GamePanel extends JPanel{
 		gl_buttonsPanel.setVerticalGroup(
 			gl_buttonsPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_buttonsPanel.createSequentialGroup()
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(mainMenu)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(newGame)
