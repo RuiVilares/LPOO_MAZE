@@ -34,7 +34,8 @@ public class MazePanel extends JPanel{
 			
 		}
 		catch(IOException e){
-			JOptionPane.showMessageDialog(this, e.getMessage());
+			JOptionPane.showMessageDialog(this, "Sprite file is missing...");
+			System.exit(0);
 		}
 		
 		

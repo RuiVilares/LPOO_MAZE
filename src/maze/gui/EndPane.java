@@ -29,7 +29,8 @@ public class EndPane extends JPanel {
 			lose = ImageIO.read(new File("res/Lose.jpg"));
 		}
 		catch(IOException e){
-			JOptionPane.showMessageDialog(this, e.getMessage());
+			JOptionPane.showMessageDialog(this, "Win or Lose image is missing...");
+			System.exit(0);
 		}
 		this.addMouseListener(new MouseListener(){
 
