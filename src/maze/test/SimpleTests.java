@@ -172,5 +172,39 @@ public class SimpleTests {
         assertEquals(maze.getDragons().size(), 0);
         assertFalse(maze.checkViability());
     }
+    @Test
+    public void isViableTest()
+    {
+        char[][] b1 = new char[][]{
+                                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
+                                { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', ' ' },
+                                { 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X' },
+                                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }};
+       
+        char[][] b2 = new char[][]{
+                                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
+                                { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X' },
+                                { 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X' },
+                                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }};
+       
+        Board board1 = new Board(b1);
+        Board board2 = new Board(b2);
+       
+        assertFalse(board1.isViable());
+        assertTrue(board2.isViable());
+       
+    }
 	
 }

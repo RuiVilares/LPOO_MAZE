@@ -210,7 +210,7 @@ public class Board implements Serializable{
 	}
 	
 	/**
-	 * Checks if the walls are well placed to play.
+	 * Checks if the walls are well placed to play (there are no "holes" on the borders).
 	 * 
 	 * @return Returns true if the board is playable and false otherwise.
 	 */
